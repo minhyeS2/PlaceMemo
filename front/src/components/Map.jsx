@@ -1,9 +1,10 @@
 import './Map.css';
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import SearchList from './SearchList';
 import Login from './Login';
 import SignUp from './SignUp';
+import PlaceDetail from './PlaceDetail';
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -15,11 +16,12 @@ const containerStyle = {
     width: '800px',
 };
 
-const Map = ( {activeMenu} ) => {
+const Map = ({ activeMenu }) => {
     const [map, setMap] = useState(null);
     const [keyword, setKeyword] = useState("");
     const [markers, setMarkers] = useState([]);
     const [selectedMarker, setSelectedMarker] = useState(null);
+    const [selectedDetail, setSelectedDetail] = useState(null);
 
     const mapRef = useRef(null);
 
@@ -60,6 +62,12 @@ const Map = ( {activeMenu} ) => {
         // useStrictTypeFiltering: false,
     });
 
+    const createDetailRequest = (placeId) => ({
+        fields: ['location', 'displayName', 'formattedAddress',
+            'internationalPhoneNumber', 'businessStatus', 'regularOpeningHours',
+            'rating', 'userRatingCount', 'photos', 'reviews'],
+    });
+
 
     // 검색시 키워드에 관한 정보를 받아오는 매서드
     const handleSearch = async () => {
@@ -85,8 +93,8 @@ const Map = ( {activeMenu} ) => {
                     position: place.location,
                     name: place.displayName,
                     address: place.formattedAddress,
-                    businessStatus: place.businessStatus, // 가공할 필요 있음
-                    rating: place.rating, // 별점 레이팅으로 만드는 라이브러리 or 기능 만들기
+                    businessStatus: place.businessStatus,
+                    rating: place.rating,
                     ratingCnt: place.userRatingCount,
                 }));
 
@@ -106,6 +114,23 @@ const Map = ( {activeMenu} ) => {
 
     const handleInfoWindow = (marker) => {
         setSelectedMarker(marker);
+    };
+
+    // placeId(고유 아이디)를 서버에 전달해서,
+    // 그에 맞는 장소 상세 정보 데이터를 구글 서버에서 받아오는 매서드
+    const fetchDetail = async (placeId) => {
+        try {
+            const { Place } = await window.google.maps.importLibrary('places');
+            const placeInstance = new Place({ id: placeId }); // 받아온 아이디로 객체 생성
+
+            const request = createDetailRequest(placeId);
+            const placeDetail = await placeInstance.fetchFields(request);
+
+            setSelectedDetail(placeDetail.place);
+
+        } catch (err) {
+            console.error("詳細取得に失敗しました", err);
+        }
     };
 
 
@@ -145,28 +170,35 @@ const Map = ( {activeMenu} ) => {
                         </InfoWindow>
                     )
                     }
+                    <PlaceDetail
+                        detail={selectedDetail}
+                        onClose={() => setSelectedDetail(null)}>
+                    </PlaceDetail>
                 </GoogleMap>
-                
+
 
                 {/* 일단 로그인 후, 검색 가능 하게 처리할것
                 로그인 후, 헤더에 닉네임 표시하기
                 메모 필터 기능 보이게 하기...등등
                 일단은 탭 기능만 구현
                 */}
-                { activeMenu === 'login' &&
-                <Login></Login>
-                } 
-                { activeMenu === 'signUp' &&
-                <SignUp></SignUp>
+                {activeMenu === 'login' &&
+                    <Login></Login>
                 }
-                { activeMenu === 'search' &&
-                <SearchList
-                    keyword={keyword}
-                    onChangeKeyword={(e) => setKeyword(e.target.value)}
-                    onSearch={handleSearch}
-                    markers={markers}
-                >
-                </SearchList>
+                {activeMenu === 'signUp' &&
+                    <SignUp></SignUp>
+                }
+                {activeMenu === 'search' &&
+                    <SearchList
+                        keyword={keyword}
+                        onChangeKeyword={(e) => setKeyword(e.target.value)}
+                        onSearch={handleSearch}
+                        markers={markers}
+                        onSelect={(placeId) => {
+                            fetchDetail(placeId);
+                    }}
+                    >
+                    </SearchList>
                 }
             </div>
         </>
