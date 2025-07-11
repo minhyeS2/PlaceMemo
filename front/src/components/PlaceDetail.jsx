@@ -5,7 +5,6 @@ import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import RatingStar from './RatingStar.jsx';
-import Memo from './Memo.jsx';
 
 const PlaceDetail = ({ detail, photos, onClose }) => {
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음

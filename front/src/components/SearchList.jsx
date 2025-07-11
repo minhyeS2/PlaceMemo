@@ -1,6 +1,7 @@
 import React from 'react'
+import RatingStar from './RatingStar.jsx';
 
-const SearchList = ({ keyword, onChangeKeyword, onSearch, markers, onSelect }) => {
+const SearchList = ({keyword, onChangeKeyword, onSearch, markers, onSelect }) => {
     return (
         <div>
             <div className='list-total'>
@@ -20,14 +21,14 @@ const SearchList = ({ keyword, onChangeKeyword, onSearch, markers, onSelect }) =
                         <div className='list-info'
                             key={marker.placeId}
                             onClick={() => {
-                                console.log("Clicked: ", marker.placeId); // ✅;
+                                console.log("Clicked: ", marker.placeId); // ✅
                                 onSelect(marker.placeId);
                             }}>
                             <div className='store-name'>
                                 <span>{marker.name}</span>
                             </div>
                             <div className='store-star'>
-                                <div><span>{marker.rating !== undefined ? marker.rating : '評価なし'}</span></div>
+                                <div><span>{marker.rating !== undefined ? marker.rating : '評価なし'}<RatingStar rating={marker.rating} /></span></div>
                                 <div><span>{marker.ratingCnt ? `${marker.ratingCnt}件` : ''}</span></div>
                             </div>
                             <div className='store-adr'>
