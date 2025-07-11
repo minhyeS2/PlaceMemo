@@ -1,0 +1,19 @@
+.header {
+    /* background-color: aqua; */
+    padding-left: 2%;
+}
+
+.title {
+    font-weight: 1000;
+    font-size: 2rem;
+}
+
+.menu {
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+}
+
+.sign-up {
+    padding-left: 3%;
+}
