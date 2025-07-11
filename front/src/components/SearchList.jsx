@@ -1,4 +1,5 @@
 import React from 'react'
+import RatingStar from './RatingStar.jsx';
 
 const SearchList = ({keyword, onChangeKeyword, onSearch, markers, onSelect }) => {
     return (
@@ -27,7 +28,7 @@ const SearchList = ({keyword, onChangeKeyword, onSearch, markers, onSelect }) =>
                                 <span>{marker.name}</span>
                             </div>
                             <div className='store-star'>
-                                <div><span>{marker.rating !== undefined ? marker.rating : '評価なし'}</span></div>
+                                <div><span>{marker.rating !== undefined ? marker.rating : '評価なし'}<RatingStar rating={marker.rating} /></span></div>
                                 <div><span>{marker.ratingCnt ? `${marker.ratingCnt}件` : ''}</span></div>
                             </div>
                             <div className='store-adr'>

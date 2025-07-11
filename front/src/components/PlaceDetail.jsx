@@ -4,6 +4,7 @@ import 'swiper/css/pagination';
 import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import RatingStar from './RatingStar.jsx';
 
 const PlaceDetail = ({ detail, photos, onClose }) => {
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음
@@ -28,7 +29,7 @@ const PlaceDetail = ({ detail, photos, onClose }) => {
                     </Swiper>
                     <div className='detail-store'>
                         <div><span>{detail.displayName ?? '名称なし'}</span></div>
-                        <div><span>{detail.rating !== undefined ? detail.rating : '評価なし'}</span></div>
+                        <div><span>{detail.rating !== undefined ? detail.rating : '評価なし'}<RatingStar rating={detail.rating} /></span></div>
                         <div><span>{detail.userRatingCount ? `${detail.userRatingCount}件` : ''}</span></div>
                         <div><span>{detail.formattedAddress ?? '住所なし'}</span></div>
                         <div><span>{detail.businessStatus === "OPERATIONAL" ? "営業中" :
@@ -50,7 +51,7 @@ const PlaceDetail = ({ detail, photos, onClose }) => {
                                     <div key={idx} className='review-info-box'>
                                         <div className='review-info'>
                                             <div><span>{review.authorAttribution.displayName ?? '名前なし'}</span></div>
-                                            <div><span>{review.rating ?? 'なし'}</span></div>
+                                            <div><span>{review.rating ?? 'なし'}<RatingStar rating={review.rating} /></span></div>
                                             <div><span>{review.relativePublishTimeDescription ?? '日付不明'}</span></div>
                                             <div><span>{review.text ?? 'レビューなし'}</span></div>
                                         </div>
@@ -65,7 +66,9 @@ const PlaceDetail = ({ detail, photos, onClose }) => {
                         </div>
                     )}
                     {activeTab === 'memo' && (
-                        <div></div>
+                        <Memo
+                            detail={detail}
+                        ></Memo>
                     )}
 
                 </div>
