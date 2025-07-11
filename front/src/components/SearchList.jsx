@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchList = ({ keyword, onChangeKeyword, onSearch, markers, onSelect }) => {
+const SearchList = ({keyword, onChangeKeyword, onSearch, markers, onSelect }) => {
     return (
         <div>
             <div className='list-total'>
@@ -20,7 +20,7 @@ const SearchList = ({ keyword, onChangeKeyword, onSearch, markers, onSelect }) =
                         <div className='list-info'
                             key={marker.placeId}
                             onClick={() => {
-                                console.log("Clicked: ", marker.placeId); // ✅;
+                                console.log("Clicked: ", marker.placeId); // ✅
                                 onSelect(marker.placeId);
                             }}>
                             <div className='store-name'>

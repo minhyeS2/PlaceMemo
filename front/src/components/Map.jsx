@@ -1,10 +1,10 @@
 import './Map.css';
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState, useRef, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import SearchList from './SearchList';
+import PlaceDetail from './PlaceDetail';
 import Login from './Login';
 import SignUp from './SignUp';
-import PlaceDetail from './PlaceDetail';
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -16,12 +16,13 @@ const containerStyle = {
     width: '800px',
 };
 
-const Map = ({ activeMenu }) => {
+const Map = ( {activeMenu} ) => {
     const [map, setMap] = useState(null);
     const [keyword, setKeyword] = useState("");
     const [markers, setMarkers] = useState([]);
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [selectedDetail, setSelectedDetail] = useState(null);
+    const [photos, setPhotos] = useState(null);
 
     const mapRef = useRef(null);
 
@@ -33,6 +34,17 @@ const Map = ({ activeMenu }) => {
         language: 'ja',
         libraries: libraries,
     });
+
+    useEffect(() => {
+        if (isLoaded) {
+            (async () => {
+                const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+                const MarkerInstance = new AdvancedMarkerElement();
+
+            })();
+        }
+    }, [isLoaded]);
+
 
     const onLoad = useCallback(function callback(map) {
         setMap(map);
@@ -68,7 +80,6 @@ const Map = ({ activeMenu }) => {
             'rating', 'userRatingCount', 'photos', 'reviews'],
     });
 
-
     // 검색시 키워드에 관한 정보를 받아오는 매서드
     const handleSearch = async () => {
         if (!map || !window.google) {
@@ -93,8 +104,8 @@ const Map = ({ activeMenu }) => {
                     position: place.location,
                     name: place.displayName,
                     address: place.formattedAddress,
-                    businessStatus: place.businessStatus,
-                    rating: place.rating,
+                    businessStatus: place.businessStatus, // 가공할 필요 있음
+                    rating: place.rating, // 별점 레이팅으로 만드는 라이브러리 or 기능 만들기
                     ratingCnt: place.userRatingCount,
                 }));
 
@@ -114,6 +125,7 @@ const Map = ({ activeMenu }) => {
 
     const handleInfoWindow = (marker) => {
         setSelectedMarker(marker);
+        // fetchDetail(marker.placeId);
     };
 
     // placeId(고유 아이디)를 서버에 전달해서,
@@ -126,13 +138,20 @@ const Map = ({ activeMenu }) => {
             const request = createDetailRequest(placeId);
             const placeDetail = await placeInstance.fetchFields(request);
 
+            console.log(placeDetail.place.reviews)
+
+            //사진 정보 처리하기
+            const photoUrls = (placeDetail.place.photos || []).map(photo =>
+                `https://places.googleapis.com/v1/${photo.name}/media?maxHeightPx=400&maxWidthPx=400&key=${API_KEY}`
+            );
+            setPhotos(photoUrls);
+
             setSelectedDetail(placeDetail.place);
 
         } catch (err) {
             console.error("詳細取得に失敗しました", err);
         }
     };
-
 
 
 
@@ -172,33 +191,34 @@ const Map = ({ activeMenu }) => {
                     }
                     <PlaceDetail
                         detail={selectedDetail}
+                        photos={photos}
                         onClose={() => setSelectedDetail(null)}>
                     </PlaceDetail>
                 </GoogleMap>
-
+                
 
                 {/* 일단 로그인 후, 검색 가능 하게 처리할것
                 로그인 후, 헤더에 닉네임 표시하기
                 메모 필터 기능 보이게 하기...등등
                 일단은 탭 기능만 구현
                 */}
-                {activeMenu === 'login' &&
-                    <Login></Login>
+                { activeMenu === 'login' &&
+                <Login></Login>
+                } 
+                { activeMenu === 'signUp' &&
+                <SignUp></SignUp>
                 }
-                {activeMenu === 'signUp' &&
-                    <SignUp></SignUp>
-                }
-                {activeMenu === 'search' &&
-                    <SearchList
-                        keyword={keyword}
-                        onChangeKeyword={(e) => setKeyword(e.target.value)}
-                        onSearch={handleSearch}
-                        markers={markers}
-                        onSelect={(placeId) => {
-                            fetchDetail(placeId);
+                { activeMenu === 'search' &&
+                <SearchList
+                    keyword={keyword}
+                    onChangeKeyword={(e) => setKeyword(e.target.value)}
+                    onSearch={handleSearch}
+                    markers={markers}
+                    onSelect={(placeId) => {
+                        fetchDetail(placeId);
                     }}
-                    >
-                    </SearchList>
+                >
+                </SearchList>
                 }
             </div>
         </>
