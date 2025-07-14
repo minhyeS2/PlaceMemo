@@ -6,7 +6,9 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,9 +46,15 @@ public class MemoC {
     	return memoService.getMemosByUserAndPlace(userId, placeId);
     }
     
-    
-    
-    
+    @DeleteMapping("/memos/{pk}")
+    public ResponseEntity<Void> deleteMemo(@PathVariable Long pk) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+
+        memoService.deleteMemoByUserAndPk(userId, pk);
+
+        return ResponseEntity.noContent().build(); // 204 No Content
+    }
     
     
     

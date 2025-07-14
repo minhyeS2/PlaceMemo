@@ -54,13 +54,24 @@ public class MemoService {
 
         return memos.stream()
             .map(memo -> new MemoResponse(
+            	memo.getPk(),
                 memo.getMember().getUserId(),
                 memo.getMemoText(),
                 memo.getPlaceName(),
                 memo.getCreatedAt()))
             .collect(Collectors.toList());
     }
+    
+    // 메모 삭제
+    public void deleteMemoByUserAndPk(String userId, Long pk) {
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
 
+        Memo memo = memoRepository.findByMemberAndPk(member, pk)
+                .orElseThrow(() -> new RuntimeException("メモが見つかりません"));
+
+        memoRepository.delete(memo);
+    }
     
     
     

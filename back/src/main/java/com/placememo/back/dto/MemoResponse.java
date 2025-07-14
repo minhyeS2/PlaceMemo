@@ -9,6 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MemoResponse {
 	
+	private Long pk;
     private String userId;
     private String memoText;
     private String placeName;
