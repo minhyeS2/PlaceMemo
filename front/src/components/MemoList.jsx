@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const MemoList = ({ detail, refreshTrigger }) => {
     const token = localStorage.getItem('token');
-    const placeId = detail.id;
+    const placeId = detail?.id;
 
     const [memos, setMemos] = useState([]);
 
@@ -11,7 +11,7 @@ const MemoList = ({ detail, refreshTrigger }) => {
             const response = await fetch(`http://localhost:8081/memos?placeId=${placeId}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                }
+                },
             });
 
             if (!response.ok) {
@@ -19,11 +19,32 @@ const MemoList = ({ detail, refreshTrigger }) => {
             }
 
             const data = await response.json();
-            setMemos(data); // data가 메모 배열이라고 가정
+            setMemos(data);
             console.log('Fetched memos:', data);
         } catch (error) {
             console.error(error);
             alert('メモ取得エラー');
+        }
+    };
+
+    const deleteMemoHandle = async (pk) => {
+        try {
+            const response = await fetch(`http://localhost:8081/memos/${pk}`, {  // RESTful URL
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('削除に失敗しました');
+            }
+
+            alert('メモを削除しました');
+            fetchMemo();  // 삭제 후 목록 갱신
+        } catch (error) {
+            alert('Error');
+            console.error(error);
         }
     };
 
@@ -39,16 +60,20 @@ const MemoList = ({ detail, refreshTrigger }) => {
             {memos.length === 0 ? (
                 <p>メモがありません。</p>
             ) : (
-                <ul>
-                    {memos.map((memo, idx) => (
-                        <li key={idx}>
+                <div>
+                    {memos.map((memo) => (
+                        <div key={memo.pk} style={{ marginBottom: '1em' }}>
                             <div>{memo.memoText}</div>
                             <div style={{ fontSize: '0.8em', color: '#555' }}>
                                 {new Date(memo.createdAt).toLocaleString()}
                             </div>
-                        </li>
+                            <div>
+                                <button>修正</button>
+                                <button onClick={() => deleteMemoHandle(memo.pk)}>削除</button>
+                            </div>
+                        </div>
                     ))}
-                </ul>
+                </div>
             )}
         </div>
     );
