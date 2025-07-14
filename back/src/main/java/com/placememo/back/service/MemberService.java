@@ -42,7 +42,10 @@ public class MemberService {
 		
 	}
 
-	
+	// get요청으로 아이디 중복 검사 -> 조회
+	public boolean isUsernameDuplicated(String userId) {
+		return memberRepository.existsByUserId(userId);
+	}
 	
 
 	
