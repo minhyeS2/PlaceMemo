@@ -14,6 +14,6 @@ public interface MemoRepository extends JpaRepository<Memo, Long>{
 	List<Memo> findAllByMember(Member member);
 	
 	// 특정 장소에 대한 메모 조회
-	List<Memo> findByPlaceId(String placeId);
+	List<Memo> findByMemberAndPlaceId(Member member, String placeId);
 	
 }

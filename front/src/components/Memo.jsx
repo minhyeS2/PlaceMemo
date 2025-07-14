@@ -1,10 +1,7 @@
 import React from 'react'
 
-const Memo = ({ detail }) => {
+const Memo = ({ detail, onMemoAdded }) => {
     const token = localStorage.getItem('token');
-    console.log(token)
-    console.log(JSON.stringify(detail));
-    console.log(detail.id);
 
     const [memoText, setMemoText] = React.useState('');
 
@@ -19,15 +16,19 @@ const Memo = ({ detail }) => {
                 body: JSON.stringify({
                     memoText: memoText,
                     placeId: detail.id,
+                    placeName: detail.displayName,
                 })
             });
             const data = await response.json();
-            alert(data.message)
+            alert(data.message);
+            setMemoText('');
+            onMemoAdded();
+
         } catch (error) {
             console.error(error);
             alert('Error');
         }
-    }
+    };
 
 
 

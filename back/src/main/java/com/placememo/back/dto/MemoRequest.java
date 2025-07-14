@@ -14,4 +14,6 @@ public class MemoRequest {
 	
 	private String placeId;
 	
+	private String placeName;
+	
 }
