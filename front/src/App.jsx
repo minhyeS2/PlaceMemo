@@ -16,6 +16,7 @@ function App() {
       />
       <Map
          activeMenu={activeMenu}
+         setActiveMenu={setActiveMenu}
       />
     </>
   )

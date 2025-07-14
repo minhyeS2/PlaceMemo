@@ -1,6 +1,53 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
-const Login = () => {
+const Login = ({ setActiveMenu }) => {
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [idMessage, setIdMessage] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
+
+  useEffect(() => {
+    checkHandle();
+  }, [id, password]);
+
+  const loginHandle = async () => {
+    try {
+      const response = await fetch('http://localhost:8081/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: id, password })
+      });
+      const data = await response.json();
+      alert(data.message);
+
+      if (response.ok) {
+        setActiveMenu('search');
+      }
+
+      console.log('token使用可能！');
+    } catch (error) {
+      console.error(error);
+      alert('Error');
+    }
+  };
+
+  const checkHandle = (e) => {
+    if (id.trim() === "") {
+      setIdMessage("IDを入力してください。");
+    } else {
+      setIdMessage("");
+    }
+
+    if (password.trim() === "") {
+      setPasswordMessage("パスワードを入力してください。");
+    } else {
+      setPasswordMessage("");
+    }
+
+  };
+
 
   return (
     <div className='login-total'>
@@ -8,13 +55,25 @@ const Login = () => {
       <div className='login'>
         <div className='id-input'>
           <span>ID</span>
-          <input />
+          <div
+            className="input-message"
+            style={{ color: idMessage.includes("可能") ? "green" : "red" }}
+          >
+            {idMessage}
+          </div>
+          <input value={id} onChange={(e) => setId(e.target.value)}></input>
         </div>
         <div className='pw-input'>
           <span>PW</span>
-          <input type="password" />
+          <div
+            className="input-message"
+            style={{ color: idMessage.includes("可能") ? "green" : "red" }}
+          >
+            {passwordMessage}
+          </div>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
         </div>
-        <button>Login</button>
+        <button onClick={loginHandle}>Login</button>
       </div>
     </div>
   )
