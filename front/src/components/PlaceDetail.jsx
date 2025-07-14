@@ -5,11 +5,20 @@ import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import RatingStar from './RatingStar.jsx';
+import Memo from './Memo.jsx';
+import MemoList from './MemoList.jsx';
 
 const PlaceDetail = ({ detail, photos, onClose }) => {
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음
-    console.log(detail);
+
     const [activeTab, setActiveTab] = useState('review');
+    const [refreshTrigger, setRefreshTrigger] = useState(false);
+
+    // 메모 등록 성공 시 호출해서 목록 갱신 트리거를 바꿈
+    const handleMemoAdded = () => {
+        setRefreshTrigger(prev => !prev);
+    };
+
 
     return (
         <>
@@ -66,9 +75,16 @@ const PlaceDetail = ({ detail, photos, onClose }) => {
                         </div>
                     )}
                     {activeTab === 'memo' && (
-                        <Memo
-                            detail={detail}
-                        ></Memo>
+                        <>
+                            <Memo
+                                detail={detail}
+                                onMemoAdded={handleMemoAdded}
+                            ></Memo>
+                            <MemoList
+                                detail={detail}
+                                refreshTrigger={refreshTrigger}
+                            ></MemoList>
+                        </>
                     )}
 
                 </div>

@@ -24,6 +24,7 @@ const Login = ({ setActiveMenu }) => {
 
       if (response.ok) {
         setActiveMenu('search');
+        localStorage.setItem('token', data.token);
       }
 
       console.log('token使用可能！');

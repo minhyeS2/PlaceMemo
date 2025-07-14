@@ -1,6 +1,7 @@
 package com.placememo.back.service;
 
 import java.util.Map;
+import java.util.Optional;
 
 import jakarta.transaction.Transactional;
 
@@ -55,25 +56,28 @@ public class MemberService {
 	
 
 	// 로그인
-		public ResponseEntity<Map<String, Object>> login(LoginRequest request) {
-		    Member member = memberRepository.findByUserId(request.getUserId());
+	public ResponseEntity<Map<String, Object>> login(LoginRequest request) {
+	    Optional<Member> memberOpt = memberRepository.findByUserId(request.getUserId());
 
-		    // 유저 존재 여부 + 비밀번호 일치 여부 확인
-		    if (member == null || !passwordEncoder.matches(request.getPassword(), member.getPassword())) {
-		        return ResponseEntity
-		        		.badRequest()
-		        		.body(Map.of("message", "IDまたはパスワードが間違っています。"));
-		    }
+	    // 유저 존재 여부 + 비밀번호 일치 여부 확인
+	    if (memberOpt.isEmpty() || 
+	        !passwordEncoder.matches(request.getPassword(), memberOpt.get().getPassword())) {
+	        return ResponseEntity
+	                .badRequest()
+	                .body(Map.of("message", "IDまたはパスワードが間違っています。"));
+	    }
 
-		    // JWT 생성, 토큰을 반환.
-		    String token = jwtUtil.generateToken(member.getUserId());
-		    
-		   
-		    return ResponseEntity.ok(Map.of(
-		    		"message", "Login成功！",
-		    		"token", token
-		    		));
-		}
+	    Member member = memberOpt.get();
+
+	    // JWT 생성, 토큰 반환
+	    String token = jwtUtil.generateToken(member.getUserId());
+
+	    return ResponseEntity.ok(Map.of(
+	        "message", "Login成功！",
+	        "token", token
+	    ));
+	}
+
 	
 	
 	
