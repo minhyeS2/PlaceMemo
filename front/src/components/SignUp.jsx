@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-const SignUp = () => {
+const SignUp = ({ setActiveMenu }) => {
+
     const [id, setId] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
@@ -25,6 +26,11 @@ const SignUp = () => {
             });
             const data = await response.text();
             alert(data); // 응답 메시지 표시
+
+            if (response.ok) {
+                setActiveMenu('login');
+            }
+
         } catch (error) {
             console.error(error);
             alert('Error');

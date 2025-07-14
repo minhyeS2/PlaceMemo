@@ -16,7 +16,7 @@ const containerStyle = {
     width: '800px',
 };
 
-const Map = ( {activeMenu} ) => {
+const Map = ( {activeMenu, setActiveMenu} ) => {
     const [map, setMap] = useState(null);
     const [keyword, setKeyword] = useState("");
     const [markers, setMarkers] = useState([]);
@@ -203,10 +203,14 @@ const Map = ( {activeMenu} ) => {
                 일단은 탭 기능만 구현
                 */}
                 { activeMenu === 'login' &&
-                <Login></Login>
+                <Login
+                    setActiveMenu={setActiveMenu}
+                ></Login>
                 } 
                 { activeMenu === 'signUp' &&
-                <SignUp></SignUp>
+                <SignUp
+                    setActiveMenu={setActiveMenu}
+                ></SignUp>
                 }
                 { activeMenu === 'search' &&
                 <SearchList

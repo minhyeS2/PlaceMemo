@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const Login = () => {
+const Login = ({ setActiveMenu }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [idMessage, setIdMessage] = useState('');
@@ -21,6 +21,11 @@ const Login = () => {
       });
       const data = await response.json();
       alert(data.message);
+
+      if (response.ok) {
+        setActiveMenu('search');
+      }
+
       console.log('token使用可能！');
     } catch (error) {
       console.error(error);
@@ -52,7 +57,7 @@ const Login = () => {
           <span>ID</span>
           <div
             className="input-message"
-            style={{ color: idMessage.includes("可能") ? "green" : "red"}}
+            style={{ color: idMessage.includes("可能") ? "green" : "red" }}
           >
             {idMessage}
           </div>
@@ -62,7 +67,7 @@ const Login = () => {
           <span>PW</span>
           <div
             className="input-message"
-            style={{ color: idMessage.includes("可能") ? "green" : "red"}}
+            style={{ color: idMessage.includes("可能") ? "green" : "red" }}
           >
             {passwordMessage}
           </div>
