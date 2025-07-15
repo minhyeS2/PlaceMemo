@@ -63,7 +63,7 @@ public class MemoService {
     }
     
     // 메모 삭제
-    public void deleteMemoByUserAndPk(String userId, Long pk) {
+    public ResponseEntity<Map<String, String>> deleteMemo(String userId, Long pk) {
         Member member = memberRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
 
@@ -71,6 +71,26 @@ public class MemoService {
                 .orElseThrow(() -> new RuntimeException("メモが見つかりません"));
 
         memoRepository.delete(memo);
+        
+        return ResponseEntity.ok(Map.of(
+        		"message", "メモを削除しました！"));
+    }
+    
+    // 메모 수정
+    public ResponseEntity<Map<String, String>> updateMemo(MemoRequest request, String userId, Long pk) {
+    	Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+
+        Memo memo = memoRepository.findByMemberAndPk(member, pk)
+                .orElseThrow(() -> new RuntimeException("メモが見つかりません"));
+    	
+        memo.setMemoText(request.getMemoText());
+        
+        memoRepository.save(memo);
+        
+        return ResponseEntity.ok(Map.of(
+        		"message", "メモを修正しました！"));
+
     }
     
     

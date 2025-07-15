@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import com.placememo.back.dto.MemoResponse;
 import com.placememo.back.service.MemoService;
 
 import lombok.RequiredArgsConstructor;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -46,15 +48,24 @@ public class MemoC {
     	return memoService.getMemosByUserAndPlace(userId, placeId);
     }
     
-    @DeleteMapping("/memos/{pk}")
-    public ResponseEntity<Void> deleteMemo(@PathVariable Long pk) {
+    @DeleteMapping("/memo-d/{pk}")
+    public ResponseEntity<Map<String, String>> deleteMemo(@PathVariable Long pk) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
 
-        memoService.deleteMemoByUserAndPk(userId, pk);
-
-        return ResponseEntity.noContent().build(); // 204 No Content
+        return memoService.deleteMemo(userId, pk);
     }
+    
+    @PutMapping("memo-u/{pk}")
+    public ResponseEntity<Map<String, String>> updateMemo(@PathVariable Long pk, @RequestBody MemoRequest request) {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+       
+        
+        return memoService.updateMemo(request, userId, pk);
+    }
+    
+    
     
     
     
