@@ -78,6 +78,7 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon })
                     {activeTab === 'memo' && (
                         <>
                             <SelectMarker
+                                detail={detail}
                                 selected={selectedIcon}
                                 onSelect={setSelectedIcon}
                             >
