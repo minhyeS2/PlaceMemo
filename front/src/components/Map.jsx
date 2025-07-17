@@ -23,6 +23,7 @@ const Map = ( {activeMenu, setActiveMenu} ) => {
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [selectedDetail, setSelectedDetail] = useState(null);
     const [photos, setPhotos] = useState(null);
+    const [selectedIcon, setSelectedIcon] = useState("/marker-red.png");
 
     const mapRef = useRef(null);
 
@@ -192,7 +193,9 @@ const Map = ( {activeMenu, setActiveMenu} ) => {
                     <PlaceDetail
                         detail={selectedDetail}
                         photos={photos}
-                        onClose={() => setSelectedDetail(null)}>
+                        onClose={() => setSelectedDetail(null)}
+                        selectedIcon={selectedIcon}
+                        setSelectedIcon={setSelectedIcon}>
                     </PlaceDetail>
                 </GoogleMap>
                 
