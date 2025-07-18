@@ -45,7 +45,7 @@ public class MemoC {
         String userId = authentication.getName();  // Jwt에서 setSubject(userId) 했기 때문에
     	
     	
-    	return memoService.getMemosByUserAndPlace(userId, placeId);
+    	return memoService.getMemos(userId, placeId);
     }
     
     @DeleteMapping("/memo-d/{pk}")

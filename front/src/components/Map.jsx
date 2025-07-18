@@ -16,14 +16,18 @@ const containerStyle = {
     width: '800px',
 };
 
-const Map = ( {activeMenu, setActiveMenu} ) => {
+const Map = ({ activeMenu, setActiveMenu }) => {
     const [map, setMap] = useState(null);
     const [keyword, setKeyword] = useState("");
     const [markers, setMarkers] = useState([]);
     const [selectedMarker, setSelectedMarker] = useState(null);
     const [selectedDetail, setSelectedDetail] = useState(null);
     const [photos, setPhotos] = useState(null);
-    const [selectedIcon, setSelectedIcon] = useState("/marker-red.png");
+    const [selectedIcon, setSelectedIcon] = useState("");
+    const [savedMarkers, setSavedMarkers] = useState([]); // 저장된 마커들 (placeId + 위치 + icon)
+    const [savedSelectedMarker, setSavedSelectedMarker] = useState(null);
+
+    console.log(savedMarkers);
 
     const mapRef = useRef(null);
 
@@ -36,13 +40,19 @@ const Map = ( {activeMenu, setActiveMenu} ) => {
         libraries: libraries,
     });
 
+    // useEffect(() => {
+    //     if (isLoaded) {
+    //         (async () => {
+    //             const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
+
+    //             fetchsavedIcons();
+    //         })();
+    //     }
+    // }, [isLoaded]);
+
     useEffect(() => {
         if (isLoaded) {
-            (async () => {
-                const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-                const MarkerInstance = new AdvancedMarkerElement();
-
-            })();
+            fetchsavedIcons();
         }
     }, [isLoaded]);
 
@@ -129,6 +139,12 @@ const Map = ( {activeMenu, setActiveMenu} ) => {
         // fetchDetail(marker.placeId);
     };
 
+    const handleSavedInfoWindow = (UserMarker) => {
+        setSavedSelectedMarker(UserMarker);
+    }
+
+
+
     // placeId(고유 아이디)를 서버에 전달해서,
     // 그에 맞는 장소 상세 정보 데이터를 구글 서버에서 받아오는 매서드
     const fetchDetail = async (placeId) => {
@@ -154,6 +170,32 @@ const Map = ( {activeMenu, setActiveMenu} ) => {
         }
     };
 
+    // 사용자별 저장된 마커 가져오기
+    const fetchsavedIcons = async () => {
+        const token = localStorage.getItem("token");
+
+        try {
+            const response = await fetch(`http://localhost:8081/icons`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Markerの取得に失敗しました');
+            }
+            const data = await response.json();
+            console.log(data);
+            setSavedMarkers(data);
+
+        } catch (error) {
+            console.error(error);
+            alert('Marker取得エラー');
+        }
+
+    }
+
+
 
 
     return isLoaded ? (
@@ -177,6 +219,21 @@ const Map = ( {activeMenu, setActiveMenu} ) => {
                             </Marker>
                         ))
                     }
+                    {savedMarkers.map((UserMarker) => (
+                        <Marker
+                            key={UserMarker.pk}
+                            position={{
+                                lat: Number(UserMarker.placeLat),
+                                lng: Number(UserMarker.placeLng)
+                            }}
+                            icon={{
+                                url: UserMarker.iconUrl,
+                                scaledSize: new window.google.maps.Size(40, 40),
+                            }}
+                            onClick={() => handleSavedInfoWindow(UserMarker)}
+                        >
+                        </Marker>
+                    ))}
                     {selectedMarker && (
                         <InfoWindow
                             position={selectedMarker.position}
@@ -190,6 +247,22 @@ const Map = ( {activeMenu, setActiveMenu} ) => {
                         </InfoWindow>
                     )
                     }
+                    {savedSelectedMarker && (
+                        <InfoWindow
+                           position={{
+                                lat: Number(savedSelectedMarker.placeLat),
+                                lng: Number(savedSelectedMarker.placeLng)
+                            }}
+                            onCloseClick={() => setSavedSelectedMarker(null)}
+                        >
+                            <div>
+                                <h3>{savedSelectedMarker.placeName}</h3>
+                                <p>{savedSelectedMarker.placeAddress}</p>
+                                <p>{savedSelectedMarker.placeStatus}</p>
+                            </div>
+                        </InfoWindow>
+                    )
+                    }
                     <PlaceDetail
                         detail={selectedDetail}
                         photos={photos}
@@ -198,34 +271,34 @@ const Map = ( {activeMenu, setActiveMenu} ) => {
                         setSelectedIcon={setSelectedIcon}>
                     </PlaceDetail>
                 </GoogleMap>
-                
+
 
                 {/* 일단 로그인 후, 검색 가능 하게 처리할것
                 로그인 후, 헤더에 닉네임 표시하기
                 메모 필터 기능 보이게 하기...등등
                 일단은 탭 기능만 구현
                 */}
-                { activeMenu === 'login' &&
-                <Login
-                    setActiveMenu={setActiveMenu}
-                ></Login>
-                } 
-                { activeMenu === 'signUp' &&
-                <SignUp
-                    setActiveMenu={setActiveMenu}
-                ></SignUp>
+                {activeMenu === 'login' &&
+                    <Login
+                        setActiveMenu={setActiveMenu}
+                    ></Login>
                 }
-                { activeMenu === 'search' &&
-                <SearchList
-                    keyword={keyword}
-                    onChangeKeyword={(e) => setKeyword(e.target.value)}
-                    onSearch={handleSearch}
-                    markers={markers}
-                    onSelect={(placeId) => {
-                        fetchDetail(placeId);
-                    }}
-                >
-                </SearchList>
+                {activeMenu === 'signUp' &&
+                    <SignUp
+                        setActiveMenu={setActiveMenu}
+                    ></SignUp>
+                }
+                {activeMenu === 'search' &&
+                    <SearchList
+                        keyword={keyword}
+                        onChangeKeyword={(e) => setKeyword(e.target.value)}
+                        onSearch={handleSearch}
+                        markers={markers}
+                        onSelect={(placeId) => {
+                            fetchDetail(placeId);
+                        }}
+                    >
+                    </SearchList>
                 }
             </div>
         </>

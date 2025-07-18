@@ -46,7 +46,7 @@ public class MemoService {
     }
     
     // 메모 조회
-    public List<MemoResponse> getMemosByUserAndPlace(String userId, String placeId) {
+    public List<MemoResponse> getMemos(String userId, String placeId) {
         Member member = memberRepository.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
 
