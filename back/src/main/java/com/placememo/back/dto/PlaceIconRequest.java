@@ -9,6 +9,8 @@ public class PlaceIconRequest {
 	
 		private String placeId;
 		private String iconUrl;
-	
+		private Double placeLat;
+		private Double placeLng;
+
 
 }

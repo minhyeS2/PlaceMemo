@@ -1,16 +1,19 @@
 import React from 'react'
-import icon1 from '../assets/icon-1.png';
-import icon2 from '../assets/icon-2.png';
-import icon3 from '../assets/icon-3.png';
-import icon4 from '../assets/icon-4.png';
 
-const iconOptions = [icon1, icon2, icon3, icon4];
+const iconBaseUrl = window.location.origin; // 현재 로컬 주소
+const iconOptions = [
+  iconBaseUrl + '/marker_icons/icon-1.png',
+  iconBaseUrl + '/marker_icons/icon-2.png',
+  iconBaseUrl + '/marker_icons/icon-3.png',
+  iconBaseUrl + '/marker_icons/icon-4.png',
+];
+
 const SelectMarker = ( {detail, selected, onSelect} ) => {
-    const token = localStorage.getItem('token');
-
+    
     const changeIconHandle = async() => {
+        const token = localStorage.getItem('token');
         try {
-            const response = await fetch(`http://localhost:8081/icon`, {
+            const response = await fetch(`http://localhost:8081/savedicon`, {
                 method: 'POST',
                                 headers: {
                     'Content-Type': 'application/json',
@@ -18,7 +21,9 @@ const SelectMarker = ( {detail, selected, onSelect} ) => {
                 },
                 body: JSON.stringify({
                     placeId: detail.id,
-                    placeUrl: selected,
+                    iconUrl: selected,
+                    placeLat: detail.Dg.location.lat,
+                    placeLng: detail.Dg.location.lng,
                 })
             });
 
@@ -28,7 +33,7 @@ const SelectMarker = ( {detail, selected, onSelect} ) => {
         } catch (error) {
             console.error(error);
             alert('Error');
-        }y
+        }
     };
 
 

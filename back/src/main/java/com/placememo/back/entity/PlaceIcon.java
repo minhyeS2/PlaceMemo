@@ -20,15 +20,19 @@ public class PlaceIcon {
 
 	 	@Id
 	    @GeneratedValue
-	    private Long id;
+	    private Long pk;
 
+	 	@ManyToOne
+	 	@JoinColumn(nullable = false, name = "member_id")
+	 	private Member member;
+	 	
 	    private String placeId;
 
 	    private String iconUrl;
+	    
+		private Double placeLat;
+		
+		private Double placeLng;
 
-	    @ManyToOne
-		@JoinColumn(nullable = false, name = "member_id")
-	    private Member member;
-	
 	
 }
