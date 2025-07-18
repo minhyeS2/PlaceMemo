@@ -9,13 +9,15 @@ const iconOptions = [
 ];
 
 const SelectMarker = ( {detail, selected, onSelect} ) => {
-    
+    console.log(detail);
+
+
     const changeIconHandle = async() => {
         const token = localStorage.getItem('token');
         try {
             const response = await fetch(`http://localhost:8081/savedicon`, {
                 method: 'POST',
-                                headers: {
+                headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
@@ -24,6 +26,9 @@ const SelectMarker = ( {detail, selected, onSelect} ) => {
                     iconUrl: selected,
                     placeLat: detail.Dg.location.lat,
                     placeLng: detail.Dg.location.lng,
+                    placeName: detail.displayName,
+                    placeAddress: detail.formattedAddress,
+                    placeStatus: detail.businessStatus
                 })
             });
 

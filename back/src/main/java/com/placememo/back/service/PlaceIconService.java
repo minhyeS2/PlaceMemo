@@ -37,6 +37,9 @@ public class PlaceIconService {
         icon.setPlaceId(request.getPlaceId());
         icon.setPlaceLat(request.getPlaceLat());
         icon.setPlaceLng(request.getPlaceLng());
+        icon.setPlaceName(request.getPlaceName());
+        icon.setPlaceAddress(request.getPlaceAddress());
+        icon.setPlaceStatus(request.getPlaceStatus());
         
         placeIconRepository.save(icon);
         
@@ -63,7 +66,10 @@ public class PlaceIconService {
 						placeIcon.getPlaceId(),
 						placeIcon.getIconUrl(),
 						placeIcon.getPlaceLat(),
-						placeIcon.getPlaceLng()))
+						placeIcon.getPlaceLng(),
+						placeIcon.getPlaceName(),
+						placeIcon.getPlaceAddress(),
+						placeIcon.getPlaceStatus()))
 				.collect(Collectors.toList());
 		
 		

@@ -13,6 +13,9 @@ public class PlaceIconResponse {
 	private String iconUrl;
 	private Double placeLat;
 	private Double placeLng;
+	private String placeName;
+	private String placeAddress;
+	private String placeStatus;
 	
 	
 }

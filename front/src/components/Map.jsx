@@ -25,7 +25,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
     const [photos, setPhotos] = useState(null);
     const [selectedIcon, setSelectedIcon] = useState("");
     const [savedMarkers, setSavedMarkers] = useState([]); // 저장된 마커들 (placeId + 위치 + icon)
-    // const [iconMap, setIconMap] = useState({}); // { placeId: iconUrl }
+    const [savedSelectedMarker, setSavedSelectedMarker] = useState(null);
 
     console.log(savedMarkers);
 
@@ -139,6 +139,12 @@ const Map = ({ activeMenu, setActiveMenu }) => {
         // fetchDetail(marker.placeId);
     };
 
+    const handleSavedInfoWindow = (UserMarker) => {
+        setSavedSelectedMarker(UserMarker);
+    }
+
+
+
     // placeId(고유 아이디)를 서버에 전달해서,
     // 그에 맞는 장소 상세 정보 데이터를 구글 서버에서 받아오는 매서드
     const fetchDetail = async (placeId) => {
@@ -224,7 +230,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                                 url: UserMarker.iconUrl,
                                 scaledSize: new window.google.maps.Size(40, 40),
                             }}
-                        // onClick={() => handleInfoWindow(UserMarker)}
+                            onClick={() => handleSavedInfoWindow(UserMarker)}
                         >
                         </Marker>
                     ))}
@@ -237,6 +243,22 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                                 <h3>{selectedMarker.name}</h3>
                                 <p>{selectedMarker.address}</p>
                                 <p>{selectedMarker.businessStatus}</p>
+                            </div>
+                        </InfoWindow>
+                    )
+                    }
+                    {savedSelectedMarker && (
+                        <InfoWindow
+                           position={{
+                                lat: Number(savedSelectedMarker.placeLat),
+                                lng: Number(savedSelectedMarker.placeLng)
+                            }}
+                            onCloseClick={() => setSavedSelectedMarker(null)}
+                        >
+                            <div>
+                                <h3>{savedSelectedMarker.placeName}</h3>
+                                <p>{savedSelectedMarker.placeAddress}</p>
+                                <p>{savedSelectedMarker.placeStatus}</p>
                             </div>
                         </InfoWindow>
                     )

@@ -1,5 +1,6 @@
 package com.placememo.back.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -26,13 +27,27 @@ public class PlaceIcon {
 	 	@JoinColumn(nullable = false, name = "member_id")
 	 	private Member member;
 	 	
+	 	@Column(nullable = false)
 	    private String placeId;
-
+	 	
+	 	@Column(nullable = false)
 	    private String iconUrl;
 	    
+	 	@Column(nullable = false)
 		private Double placeLat;
 		
+	 	@Column(nullable = false)
 		private Double placeLng;
+		
+	 	@Column(nullable = false)
+		private String placeName;
+		
+	 	@Column(nullable = false)
+		private String placeAddress;
+		
+	 	@Column(nullable = false)
+		private String placeStatus;
+		
 
 	
 }
