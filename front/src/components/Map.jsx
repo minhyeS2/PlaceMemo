@@ -11,10 +11,10 @@ const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 const libraries = ['places', 'marker'];
 
 const center = { lat: 35.681236, lng: 139.767125 };
-const containerStyle = {
-    height: '500px',
-    width: '800px',
-};
+// const containerStyle = {
+//     height: '500px',
+//     width: '800px',
+// };
 
 const Map = ({ activeMenu, setActiveMenu }) => {
     const [map, setMap] = useState(null);
@@ -202,7 +202,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
         <>
             <div className='map-total'>
                 <GoogleMap
-                    mapContainerStyle={containerStyle}
+                    mapContainerClassName="map-container"
                     center={center}
                     zoom={13}
                     onLoad={onLoad}

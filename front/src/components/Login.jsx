@@ -1,3 +1,5 @@
+import './Login.css';
+
 import React, { useEffect, useState } from 'react'
 
 const Login = ({ setActiveMenu }) => {
@@ -52,9 +54,9 @@ const Login = ({ setActiveMenu }) => {
 
   return (
     <div className='login-total'>
-      <div><span>Login</span></div>
       <div className='login'>
-        <div className='id-input'>
+      <div className='page-name'><span>LOGIN</span></div>
+        <div className='id'>
           <span>ID</span>
           <div
             className="input-message"
@@ -62,9 +64,11 @@ const Login = ({ setActiveMenu }) => {
           >
             {idMessage}
           </div>
+        </div>
+        <div className='id-input'>
           <input value={id} onChange={(e) => setId(e.target.value)}></input>
         </div>
-        <div className='pw-input'>
+        <div className='pw'>
           <span>PW</span>
           <div
             className="input-message"
@@ -72,9 +76,13 @@ const Login = ({ setActiveMenu }) => {
           >
             {passwordMessage}
           </div>
+        </div>
+        <div className='pw-input'>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
         </div>
-        <button onClick={loginHandle}>Login</button>
+        <button 
+        className='btn'
+        onClick={loginHandle}>Login</button>
       </div>
     </div>
   )

@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
+
+.signUp-total {
+  width: 300px;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.signUp {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+

@@ -1,7 +1,7 @@
 import React from 'react'
 import './header.css'
 
-const Header = ({activeMenu, setActiveMenu}) => {
+const Header = ({ activeMenu, setActiveMenu }) => {
 
     return (
         <>
@@ -10,16 +10,16 @@ const Header = ({activeMenu, setActiveMenu}) => {
                     <span>PlaceMemo !</span>
                 </div>
                 <div className='menu'>
-                    <div className={activeMenu === 'login' ? 'active' : ''}
-                    onClick={() => setActiveMenu('login')}>
+                    <div className={activeMenu === 'login' ? 'active' : 'login'}
+                        onClick={() => setActiveMenu('login')}>
                         <span>Login</span>
                     </div>
-                    <div className={activeMenu === 'signUp' ? 'active' : ''}
-                    onClick={() => setActiveMenu('signUp')}>
+                    <div className={activeMenu === 'signUp' ? 'active' : 'signUp'}
+                        onClick={() => setActiveMenu('signUp')}>
                         <span>Sign-up</span>
                     </div>
-                    <div className={activeMenu === 'search' ? 'active' : ''}
-                    onClick={() => setActiveMenu('search')}>
+                    <div className={activeMenu === 'search' ? 'active' : 'search'}
+                        onClick={() => setActiveMenu('search')}>
                         <span>Search</span>
                     </div>
                 </div>
