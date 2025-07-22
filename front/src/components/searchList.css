@@ -1,0 +1,132 @@
+.list-total {
+  width: 300px;
+  padding: 40px 30px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.list-box {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px 0px;
+  margin-top: 20px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.list-info {
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.list-info:hover {
+  background-color: #f9fafb;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.store-name span {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #212121;
+}
+
+.store-star {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  margin-top: 6px;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+.rating span {
+  font-weight: 600;
+}
+
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.star {
+  color: #ccc; /* 기본 회색 */
+}
+
+.star.full {
+  color: #ffc107; /* 노란색 */
+}
+
+.star.half {
+  color: #777;
+}
+
+.star.empty {
+  color: #777;
+}
+
+
+.rating-cnt {
+  color: #777;
+}
+
+.store-adr {
+  margin-top: 6px;
+  font-size: 0.88rem;
+  color: #505050;
+  line-height: 1.4;
+}
+
+
+
+
+/* 검색 */
+.search-total {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-input input {
+  width: 220px;
+  padding: 12px 0px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+  outline: none;
+}
+
+.search-input input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.search-btn {
+  width: 70px;
+  padding: 12px 0px;
+  margin-left: 5px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-btn button:hover {
+  border-color: #4caf50;
+}
+
+.search-btn button:active {
+  border: none;
+  background-color: #388e3c;
+}
+
