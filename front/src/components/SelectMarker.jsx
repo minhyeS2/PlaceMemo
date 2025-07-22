@@ -2,10 +2,10 @@ import React from 'react'
 
 const iconBaseUrl = window.location.origin; // 현재 로컬 주소
 const iconOptions = [
-  iconBaseUrl + '/marker_icons/icon-1.png',
-  iconBaseUrl + '/marker_icons/icon-2.png',
-  iconBaseUrl + '/marker_icons/icon-3.png',
-  iconBaseUrl + '/marker_icons/icon-4.png',
+  iconBaseUrl + '/marker_icons/icon1.png',
+  iconBaseUrl + '/marker_icons/icon2.png',
+  iconBaseUrl + '/marker_icons/icon3.png',
+  iconBaseUrl + '/marker_icons/icon4.png',
 ];
 
 const SelectMarker = ( {detail, selected, onSelect} ) => {
