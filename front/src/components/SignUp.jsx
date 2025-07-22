@@ -1,3 +1,5 @@
+import './signUp.css';
+
 import React, { useEffect, useState } from 'react';
 
 const SignUp = ({ setActiveMenu }) => {
@@ -75,49 +77,59 @@ const SignUp = ({ setActiveMenu }) => {
 
     return (
         <div className='signUp-total'>
-            <div><span>Sign UP</span></div>
             <div className='signUp'>
-                <div className='id-input'>
+            <div className='page-name'><span>Sign Up</span></div>
+                <div className='id'> 
                     <span>ID</span>
                     <div
                         className="input-message"
-                        style={{ color: idMessage.includes("可能") ? "green" : "red", fontSize: "0.9em" }}
+                        style={{ color: idMessage.includes("可能") ? "green" : "red"}}
                     >
                         {idMessage}
                     </div>
+                </div>  
+                <div className='id-input'>
                     <input value={id} onChange={(e) => setId(e.target.value)} />
                 </div>
-                <div className='nickname-input'>
-                    <span>nickname</span>
+                <div className='nickname'>
+                    <span>Nickname</span>
                     <div
                         className="input-message"
-                        style={{ color: idMessage.includes("可能") ? "green" : "red", fontSize: "0.9em" }}
+                        style={{ color: nicknameMessage.includes("可能") ? "green" : "red"}}
                     >
                         {nicknameMessage}
                     </div>
+                </div>
+                <div className='nickname-input'>
                     <input value={nickname} onChange={(e) => setNickname(e.target.value)} />
                 </div>
-                <div className='pw-input'>
+                <div className='pw'>
                     <span>PW</span>
                     <div
                         className="input-message"
-                        style={{ color: idMessage.includes("可能") ? "green" : "red", fontSize: "0.9em" }}
+                        style={{ color: passwordMessage.includes("可能") ? "green" : "red"}}
                     >
                         {passwordMessage}
                     </div>
+                </div>
+                <div className='pw-input'>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
-                <div className='pw-check-input'>
-                    <span>PW check</span>
+                <div className='pw-check'>
+                    <span>PW Check</span>
                     <div
                         className="input-message"
-                        style={{ color: idMessage.includes("可能") ? "green" : "red", fontSize: "0.9em" }}
+                        style={{ color: passwordMessage.includes("可能") ? "green" : "red"}}
                     >
                         {passwordMessage}
                     </div>
+                </div>
+                <div className='pw-check-input'>
                     <input type="password" value={passwordCheck} onChange={(e) => setPasswordCheck(e.target.value)} />
                 </div>
-                <button onClick={signUpHandle}>Sign UP</button>
+                <button 
+                className='btn'
+                onClick={signUpHandle}>Sign UP</button>
             </div>
         </div>
     );

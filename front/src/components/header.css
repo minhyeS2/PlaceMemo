@@ -1,6 +1,11 @@
 .header {
-    /* background-color: aqua; */
-    padding-left: 2%;
+    background-color: rgba(255, 255, 255, 0.966);
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+    padding-top: 0.7%;
+    padding-bottom: 0.7%;
+    padding-left: 3%;
 }
 
 .title {
@@ -11,9 +16,13 @@
 .menu {
     font-weight: 600;
     font-size: 1rem;
+    color: rgb(165, 165, 165);
+    transition: color 0.2s ease;
+    gap: 30px;
     display: flex;
 }
 
-.sign-up {
-    padding-left: 3%;
+.active {
+    font-weight: 600;
+    color: rgb(0, 0, 0);
 }
