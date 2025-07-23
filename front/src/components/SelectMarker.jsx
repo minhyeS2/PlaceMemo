@@ -55,12 +55,12 @@ const SelectMarker = ({ detail, selected, onSelect }) => {
                     />
                 </div>
             ))}
-            <button
+            {/* <button
                 className='marker-btn'
                 onClick={changeIconHandle}
             >
                 変更
-            </button>
+            </button> */}
         </div>
     );
 };

@@ -1,10 +1,12 @@
 .marker-total {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 10px;
 }
 
 .marker-icon>img {
-    width: 45px;
+    width: 30px;
     border: 2px solid #bdbdbd;
 }
 
@@ -14,17 +16,4 @@
 
 img.selected {
     border: 2px solid #4caf50;
-}
-
-.marker-btn {
-    width: 70px;
-    height: 50px;
-    background-color: #4caf50;
-    color: white;
-    font-size: 0.9rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
 }

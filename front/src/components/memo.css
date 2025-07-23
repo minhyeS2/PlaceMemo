@@ -1,39 +1,61 @@
-.detail-memo-total {
-  width: 300px;
+.memo-add-total {
+  width: 260px;
+  position: absolute;
+  bottom: 2vh;
+  left: 1vw;
+  padding: 1rem 1rem;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 10px 0px;
+  gap: 0.5rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-.textarea {
-  width: 300px;
+.memo-add-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
 }
 
-.content {
-  width: 290px;
-  height: 120px;
-  resize: none;
-  /* padding: 8px; */
-  font-size: 14px;
-  border: 2px solid #ccc;
-  border-radius: 1rem;
-}
-
-.content:focus {
+.memo-content {
+  width: 90%;
+  height: 100px;
+  padding: 0.8rem;
+  font-size: 0.7rem;
+  border: 1.5px solid #ccc;
+  border-radius: 0.8rem;
   outline: none;
-  border-color: #969696;
+  resize: none;
+  transition: border 0.3s;
 }
 
-.memo-btn {
-    width: 300px;
-    height: 50px;
-    background-color: #4caf50;
-    color: white;
-    font-size: 0.9rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+.memo-content:focus {
+ box-shadow: 0 0 5px rgba(121, 121, 121, 0.5);
+}
+
+.memo-add-btn {
+  width: 100%;
+  height: 40px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.6rem 1rem;
+  background-color: #4caf50;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.memo-add-btn:hover {
+  background-color: #43a047;
+}
+
+.memo-add-btn:active {
+  background-color: #2b7a2f;
+  transform: scale(0.97);
 }

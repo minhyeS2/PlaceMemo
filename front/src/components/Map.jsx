@@ -7,6 +7,8 @@ import Login from './Login';
 import SignUp from './SignUp';
 import SearchBox from './SearchBox';
 import SlidingPanel from './SlidingPanel';
+import SelectMarker from './SelectMarker';
+import Memo from './Memo';
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -116,7 +118,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
 
                 // console.log(newMarkers);
                 setMarkers(newMarkers);
-                setIsSearchActive(true);  
+                setIsSearchActive(true);
 
                 newMarkers.forEach(m => bounds.extend(m.position));
                 mapRef.current.fitBounds(bounds);
