@@ -200,6 +200,12 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                     onLoad={onLoad}
                     onUnmount={onUnmount}
                     onClick={() => setSelectedMarker(null)}
+                    options={
+                        {
+                            disableDefaultUI: true
+                        }
+                    }
+
                 >
                     {/* Child components, such as markers, info windows, etc. */
                         markers.map((marker) => (
@@ -256,6 +262,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                     )
                     }
                 </GoogleMap>
+                
                 <SlidingPanel
                     isOpen={!!selectedDetail}
                     onClose={() => setSelectedDetail(null)}

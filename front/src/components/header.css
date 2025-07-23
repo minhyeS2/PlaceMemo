@@ -3,14 +3,13 @@
     position: fixed;
     z-index: 999;
     width: 100%;
-    padding-top: 0.7%;
-    padding-bottom: 0.7%;
-    padding-left: 3%;
+    padding: 0.5vw 3.5vh;
+    display: flex;
 }
 
 .title {
     font-weight: 1000;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .menu {
@@ -20,6 +19,10 @@
     transition: color 0.2s ease;
     gap: 30px;
     display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 67vw;
+
 }
 
 .active {

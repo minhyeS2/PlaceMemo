@@ -1,12 +1,11 @@
 .map-total {
-    /* width: 1360px;
-    height: 620px; */
     display: flex;
-    margin-top: 7.5%;
-}
+    position: relative;
+  }
+
 .map-container {
-    width: 850px;
-    height: 620px;
+    width: 100vw;
+    height: 100vh;
 }
 
 /* 인풋 */
