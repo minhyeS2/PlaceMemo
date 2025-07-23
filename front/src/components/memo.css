@@ -1,0 +1,39 @@
+.detail-memo-total {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0px;
+}
+
+.textarea {
+  width: 300px;
+}
+
+.content {
+  width: 290px;
+  height: 120px;
+  resize: none;
+  /* padding: 8px; */
+  font-size: 14px;
+  border: 2px solid #ccc;
+  border-radius: 1rem;
+}
+
+.content:focus {
+  outline: none;
+  border-color: #969696;
+}
+
+.memo-btn {
+    width: 300px;
+    height: 50px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}

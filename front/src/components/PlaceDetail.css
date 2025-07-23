@@ -1,37 +1,111 @@
 .detail-total {
-    position: absolute;
-    top: 0;
-    right: 0;
     width: 300px;
-    height: 100%;
-    background: #fff;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.3);
-    z-index: 1000;
-    transition: transform 0.3s ease;
-    transform: translateX(0);
-
-    overflow-y: auto;      /* 내용이 넘치면 세로 스크롤 */
-    -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
-}
-
-.detail-total.hidden {
-    transform: translateX(100%);
-}
-
-.cancle-btn button {
-    float: right;
-    margin: 10px;
-    background-color: #eee;
-    border: none;
-    cursor: pointer;
+    padding: 40px 30px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .detail-pic img {
     width: 100%;
-    height: 180px;
+    height: 200px;
     object-fit: cover;
+}
+
+.detail-store {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #505050;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
+.detail-store span {
+    line-height: 1.4;
+}
+
+.display-name {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #212121;
+}
+
+.detail-rating {
+    display: flex;
+    gap: 10px;
 }
 
 .detail-menu {
     display: flex;
+    justify-content: space-around;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+    margin: 20px 0;
+}
+
+.detail-menu div {
+    cursor: pointer;
+    padding: 6px 12px;
+    font-weight: 500;
+    color: #555;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.detail-menu .active {
+    background-color: #f0f0f0;
+    color: #000;
+    font-weight: 600;
+}
+
+.detail-review-total {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.review-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.review-info-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    gap: 10px;
+}
+
+.review-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+    color: #333;
+    flex: 1;
+}
+
+.review-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #212121;
+}
+
+.review-rating {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 7px;
+}
+
+.review-text {
+    color: #505050;
 }

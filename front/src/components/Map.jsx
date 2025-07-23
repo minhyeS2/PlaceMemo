@@ -5,6 +5,7 @@ import SearchList from './SearchList';
 import PlaceDetail from './PlaceDetail';
 import Login from './Login';
 import SignUp from './SignUp';
+import SlidingPanel from './SlidingPanel';
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -27,6 +28,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
     const [savedMarkers, setSavedMarkers] = useState([]); // 저장된 마커들 (placeId + 위치 + icon)
     const [savedSelectedMarker, setSavedSelectedMarker] = useState(null);
 
+
     console.log(savedMarkers);
 
     const mapRef = useRef(null);
@@ -39,16 +41,6 @@ const Map = ({ activeMenu, setActiveMenu }) => {
         language: 'ja',
         libraries: libraries,
     });
-
-    // useEffect(() => {
-    //     if (isLoaded) {
-    //         (async () => {
-    //             const { AdvancedMarkerElement } = await google.maps.importLibrary('marker');
-
-    //             fetchsavedIcons();
-    //         })();
-    //     }
-    // }, [isLoaded]);
 
     useEffect(() => {
         if (isLoaded) {
@@ -249,7 +241,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                     }
                     {savedSelectedMarker && (
                         <InfoWindow
-                           position={{
+                            position={{
                                 lat: Number(savedSelectedMarker.placeLat),
                                 lng: Number(savedSelectedMarker.placeLng)
                             }}
@@ -263,14 +255,21 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                         </InfoWindow>
                     )
                     }
-                    <PlaceDetail
-                        detail={selectedDetail}
-                        photos={photos}
-                        onClose={() => setSelectedDetail(null)}
-                        selectedIcon={selectedIcon}
-                        setSelectedIcon={setSelectedIcon}>
-                    </PlaceDetail>
                 </GoogleMap>
+                <SlidingPanel
+                    isOpen={!!selectedDetail}
+                    onClose={() => setSelectedDetail(null)}
+                >
+                    {selectedDetail && (
+                        <PlaceDetail
+                            detail={selectedDetail}
+                            photos={photos}
+                            onClose={() => setSelectedDetail(null)} // 내부에서도 닫기 가능
+                            selectedIcon={selectedIcon}
+                            setSelectedIcon={setSelectedIcon}
+                        />
+                    )}
+                </SlidingPanel>
 
 
                 {/* 일단 로그인 후, 검색 가능 하게 처리할것

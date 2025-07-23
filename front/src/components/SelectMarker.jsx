@@ -1,18 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react';
+import './selectMarker.css';
 
-const iconBaseUrl = window.location.origin; // 현재 로컬 주소
+const iconBaseUrl = window.location.origin;
 const iconOptions = [
-  iconBaseUrl + '/marker_icons/icon-1.png',
-  iconBaseUrl + '/marker_icons/icon-2.png',
-  iconBaseUrl + '/marker_icons/icon-3.png',
-  iconBaseUrl + '/marker_icons/icon-4.png',
+  iconBaseUrl + '/marker_icons/icon1.png',
+  iconBaseUrl + '/marker_icons/icon2.png',
+  iconBaseUrl + '/marker_icons/icon3.png',
+  iconBaseUrl + '/marker_icons/icon4.png',
 ];
 
-const SelectMarker = ( {detail, selected, onSelect} ) => {
-    console.log(detail);
+const SelectMarker = ({ detail, selected, onSelect }) => {
+    const [selectedImgIdx, setSelectedImgIdx] = useState(null);
 
-
-    const changeIconHandle = async() => {
+    const changeIconHandle = async () => {
         const token = localStorage.getItem('token');
         try {
             const response = await fetch(`http://localhost:8081/savedicon`, {
@@ -34,33 +34,35 @@ const SelectMarker = ( {detail, selected, onSelect} ) => {
 
             const data = await response.json();
             alert(data.message);
-            
         } catch (error) {
             console.error(error);
             alert('Error');
         }
     };
 
-
-
-
     return (
-        <div>
-            {iconOptions.map((icon) => (
-                <div key={icon}>
+        <div className='marker-total'>
+            {iconOptions.map((icon, idx) => (
+                <div className='marker-icon' key={icon}>
                     <img
                         src={icon}
-                        style={{
-                            width: "40px",
-                            border: selected === icon ? "2px solid blue" : "1px solid gray",
-                            cursor: "pointer"}}
-                        onClick={() => onSelect(icon)}
+                        className={selectedImgIdx === idx ? 'selected' : ''}
+                        onClick={() => {
+                            setSelectedImgIdx(idx);
+                            onSelect(icon);
+                        }}
+                        alt={`icon-${idx}`}
                     />
                 </div>
             ))}
-            <button onClick={() => changeIconHandle()}>変更</button>
+            <button
+                className='marker-btn'
+                onClick={changeIconHandle}
+            >
+                変更
+            </button>
         </div>
-    )
-}
+    );
+};
 
-export default SelectMarker
+export default SelectMarker;

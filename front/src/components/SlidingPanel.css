@@ -1,0 +1,36 @@
+.place-detail-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background-color: white;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.place-detail-panel.open {
+  transform: translateX(0);
+}
+
+.close-btn-wrapper {
+  text-align: right;
+  padding: 12px;
+}
+
+.close-btn {
+  font-size: 1.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.panel-content {
+  padding: 20px;
+  overflow-y: auto;
+  flex-grow: 1;
+}

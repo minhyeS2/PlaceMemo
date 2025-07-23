@@ -1,3 +1,5 @@
+import './memoList.css';
+
 import React, { useEffect, useState } from 'react';
 
 const MemoList = ({ detail, refreshTrigger }) => {
@@ -90,42 +92,52 @@ const MemoList = ({ detail, refreshTrigger }) => {
     }, [placeId, token, refreshTrigger]);
 
     return (
-        <div className="memo-list">
-            <h4>保存されたメモ</h4>
-            {memos.length === 0 ? (
-                <p>メモがありません。</p>
-            ) : (
-                <div>
-                    {memos.map((memo) => (
-                        <div key={memo.pk} style={{ marginBottom: '1em' }}>
-                            {editingPk === memo.pk ? (
-                                <>
-                                    <textarea
-                                        value={editedText}
-                                        onChange={(e) => setEditedText(e.target.value)}
-                                    />
-                                    <div>
-                                        <button onClick={() => updateMemo(memo.pk)}>保存</button>
-                                        <button onClick={cancelEditing}>キャンセル</button>
-                                    </div>
-                                </>
-                            ) : (
-                                <>
-                                    <div>{memo.memoText}</div>
-                                    <div style={{ fontSize: '0.8em', color: '#555' }}>
-                                        {new Date(memo.createdAt).toLocaleString()}
-                                    </div>
-                                    <div>
-                                        <button onClick={() => startEditing(memo)}>修正</button>
-                                        <button onClick={() => deleteMemoHandle(memo.pk)}>削除</button>
-                                    </div>
-                                </>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            )}
+<div className="memo-list">
+  <h4 className="memo-title">SAVED MEMO</h4>
+  {memos.length === 0 ? (
+    <p className="memo-empty">メモがありません。</p>
+  ) : (
+    <div className="memo-container">
+      {memos.map((memo) => (
+        <div key={memo.pk} className="memo-card">
+          {editingPk === memo.pk ? (
+            <>
+              <textarea
+                className="memo-textarea"
+                value={editedText}
+                onChange={(e) => setEditedText(e.target.value)}
+              />
+              <div className="memo-button-group">
+                <button className="memo-btn memo-save" onClick={() => updateMemo(memo.pk)}>
+                  保存
+                </button>
+                <button className="memo-btn memo-cancel" onClick={cancelEditing}>
+                  キャンセル
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="memo-text">{memo.memoText}</div>
+              <div className="memo-date">
+                {new Date(memo.createdAt).toLocaleString()}
+              </div>
+              <div className="memo-button-group">
+                <button className="memo-btn memo-edit" onClick={() => startEditing(memo)}>
+                  修正
+                </button>
+                <button className="memo-btn memo-delete" onClick={() => deleteMemoHandle(memo.pk)}>
+                  削除
+                </button>
+              </div>
+            </>
+          )}
         </div>
+      ))}
+    </div>
+  )}
+</div>
+
     );
 };
 
