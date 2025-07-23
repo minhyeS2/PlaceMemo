@@ -2,14 +2,90 @@
 
 .signUp-total {
   width: 300px;
-  padding: 40px 30px;
-  background-color: #ffffff;
+  position: absolute;
+  top: 8.5%;
+  right: 0%;
+  padding-top: 4.5vh;
+  padding-bottom: 4.5vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  background-color: rgba(255, 255, 255, 0.966);
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
 .signUp {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
 }
+
+.page-name {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333333;
+  text-align: center;
+}
+
+.signUp-id, .signUp-pw, .nickname, .pw-check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #555555;
+}
+
+.input-message {
+  font-size: 0.6rem;
+  min-width: 100px;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* 인풋 */
+.signUp-id-input input,
+.signUp-pw-input input,
+.nickname-input input,
+.pw-check-input input {
+  width: 300px;
+  height: 10px;
+  padding: 12px 0px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+  outline: none;
+}
+
+.signUp-id-input input:focus,
+.signUp-pw-input input:focus,
+.nickname-input input:focus,
+.pw-check-input input:focus{
+  border-color: #747474;
+  box-shadow: 0 0 5px rgba(121, 121, 121, 0.5);
+}
+
+.signUp-btn {
+  width: 305px;
+  padding: 12px 0;
+  margin-top: 10px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.signUp-btn:hover {
+  background-color: #43a047;
+}
+
+.signUp-btn:active {
+  border-color: #2b7a2f;
+  border: #2b7a2f;
+}
+
 

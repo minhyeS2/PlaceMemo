@@ -1,0 +1,20 @@
+.star-rating {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.star {
+  color: #ccc; /* 기본 회색 */
+}
+
+.star.full {
+  color: #ffc107; /* 노란색 */
+}
+
+.star.half {
+  color: #777;
+}
+
+.star.empty {
+  color: #777;
+}

@@ -78,8 +78,8 @@ const SignUp = ({ setActiveMenu }) => {
     return (
         <div className='signUp-total'>
             <div className='signUp'>
-            <div className='page-name'><span>Sign Up</span></div>
-                <div className='id'> 
+            <div className='page-name'><span>SIGN UP</span></div>
+                <div className='signUp-id'> 
                     <span>ID</span>
                     <div
                         className="input-message"
@@ -88,7 +88,7 @@ const SignUp = ({ setActiveMenu }) => {
                         {idMessage}
                     </div>
                 </div>  
-                <div className='id-input'>
+                <div className='signUp-id-input'>
                     <input value={id} onChange={(e) => setId(e.target.value)} />
                 </div>
                 <div className='nickname'>
@@ -103,7 +103,7 @@ const SignUp = ({ setActiveMenu }) => {
                 <div className='nickname-input'>
                     <input value={nickname} onChange={(e) => setNickname(e.target.value)} />
                 </div>
-                <div className='pw'>
+                <div className='signUp-pw'>
                     <span>PW</span>
                     <div
                         className="input-message"
@@ -112,7 +112,7 @@ const SignUp = ({ setActiveMenu }) => {
                         {passwordMessage}
                     </div>
                 </div>
-                <div className='pw-input'>
+                <div className='signUp-pw-input'>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className='pw-check'>
@@ -128,7 +128,7 @@ const SignUp = ({ setActiveMenu }) => {
                     <input type="password" value={passwordCheck} onChange={(e) => setPasswordCheck(e.target.value)} />
                 </div>
                 <button 
-                className='btn'
+                className='signUp-btn'
                 onClick={signUpHandle}>Sign UP</button>
             </div>
         </div>
