@@ -81,7 +81,7 @@ const Login = ({ setActiveMenu }) => {
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
         </div>
         <button 
-        className='btn'
+        className='login-btn'
         onClick={loginHandle}>Login</button>
       </div>
     </div>
