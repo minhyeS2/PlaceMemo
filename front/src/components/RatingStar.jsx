@@ -1,3 +1,4 @@
+import './ratingStar.css';
 import React from 'react'
 
 const RatingStar = ({ rating }) => {

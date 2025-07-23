@@ -5,6 +5,7 @@ import SearchList from './SearchList';
 import PlaceDetail from './PlaceDetail';
 import Login from './Login';
 import SignUp from './SignUp';
+import SearchBox from './SearchBox';
 import SlidingPanel from './SlidingPanel';
 
 
@@ -27,6 +28,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
     const [selectedIcon, setSelectedIcon] = useState("");
     const [savedMarkers, setSavedMarkers] = useState([]); // 저장된 마커들 (placeId + 위치 + icon)
     const [savedSelectedMarker, setSavedSelectedMarker] = useState(null);
+    const [isSearchActive, setIsSearchActive] = useState(false);
 
 
     console.log(savedMarkers);
@@ -114,6 +116,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
 
                 // console.log(newMarkers);
                 setMarkers(newMarkers);
+                setIsSearchActive(true);  
 
                 newMarkers.forEach(m => bounds.extend(m.position));
                 mapRef.current.fitBounds(bounds);
@@ -262,21 +265,28 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                     )
                     }
                 </GoogleMap>
-                
+                <SearchBox
+                    keyword={keyword}
+                    onChangeKeyword={(e) => setKeyword(e.target.value)}
+                    onSearch={handleSearch}
+                >
+                </SearchBox>
+
+
                 {/* <SlidingPanel
                     isOpen={!!selectedDetail}
                     onClose={() => setSelectedDetail(null)}
                 >
                 </SlidingPanel> */}
-                    {selectedDetail && (
-                        <PlaceDetail
-                            detail={selectedDetail}
-                            photos={photos}
-                            onClose={() => setSelectedDetail(null)} // 내부에서도 닫기 가능
-                            selectedIcon={selectedIcon}
-                            setSelectedIcon={setSelectedIcon}
-                        />
-                    )}
+                {selectedDetail && (
+                    <PlaceDetail
+                        detail={selectedDetail}
+                        photos={photos}
+                        onClose={() => setSelectedDetail(null)} // 내부에서도 닫기 가능
+                        selectedIcon={selectedIcon}
+                        setSelectedIcon={setSelectedIcon}
+                    />
+                )}
 
 
                 {/* 일단 로그인 후, 검색 가능 하게 처리할것
@@ -296,13 +306,11 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                 }
                 {activeMenu === 'search' &&
                     <SearchList
-                        keyword={keyword}
-                        onChangeKeyword={(e) => setKeyword(e.target.value)}
-                        onSearch={handleSearch}
                         markers={markers}
                         onSelect={(placeId) => {
                             fetchDetail(placeId);
                         }}
+                        isSearchActive={isSearchActive}
                     >
                     </SearchList>
                 }
