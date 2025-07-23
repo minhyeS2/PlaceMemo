@@ -263,10 +263,11 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                     }
                 </GoogleMap>
                 
-                <SlidingPanel
+                {/* <SlidingPanel
                     isOpen={!!selectedDetail}
                     onClose={() => setSelectedDetail(null)}
                 >
+                </SlidingPanel> */}
                     {selectedDetail && (
                         <PlaceDetail
                             detail={selectedDetail}
@@ -276,7 +277,6 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                             setSelectedIcon={setSelectedIcon}
                         />
                     )}
-                </SlidingPanel>
 
 
                 {/* 일단 로그인 후, 검색 가능 하게 처리할것

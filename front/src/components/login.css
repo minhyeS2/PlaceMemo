@@ -26,7 +26,7 @@
   text-align: center;
 }
 
-.id, .pw, .nickname, .pw-check {
+.id, .pw {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,9 +44,7 @@
 
 /* 인풋 */
 .id-input input,
-.pw-input input,
-.nickname-input input,
-.pw-check-input input {
+.pw-input input {
   width: 300px;
   padding: 12px 0px;
   font-size: 1rem;
@@ -57,9 +55,7 @@
 }
 
 .id-input input:focus,
-.pw-input input:focus,
-.nickname-input input:focus,
-.pw-check-input input:focus{
+.pw-input input:focus {
   border-color: #747474;
   box-shadow: 0 0 5px rgba(121, 121, 121, 0.5);
 }
