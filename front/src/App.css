@@ -4,4 +4,5 @@ body {
     font-family: "Almarai", sans-serif;
 	font-style: normal;
     width: 1300px;
+    /* overflow-x: hidden; */
 }

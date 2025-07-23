@@ -1,3 +1,5 @@
+import './memo.css';
+
 import React from 'react'
 
 const Memo = ({ detail, onMemoAdded }) => {
@@ -35,11 +37,15 @@ const Memo = ({ detail, onMemoAdded }) => {
 
     return (
         <div className='detail-memo-total'>
-            <div>
-                <textarea value={memoText} onChange={(e) => setMemoText(e.target.value)}></textarea>
+            <div className='textarea'>
+                <textarea 
+                className='content'
+                value={memoText} onChange={(e) => setMemoText(e.target.value)}></textarea>
             </div>
-            <div>마크 커스텀 선택창</div>
-            <button onClick={memoHandle}>保存</button>
+            {/* <div>마크 커스텀 선택창</div> */}
+            <button 
+            className='memo-btn'
+            onClick={memoHandle}>保存</button>
         </div>
     )
 }
