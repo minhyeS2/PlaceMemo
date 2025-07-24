@@ -70,7 +70,7 @@ public class MemberService {
 	    Member member = memberOpt.get();
 
 	    // JWT 생성, 토큰 반환
-	    String token = jwtUtil.generateToken(member.getUserId());
+	    String token = jwtUtil.generateToken(member.getUserId(), member.getNickname());
 
 	    return ResponseEntity.ok(Map.of(
 	        "message", "Login成功！",

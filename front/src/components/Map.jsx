@@ -20,7 +20,7 @@ const center = { lat: 35.681236, lng: 139.767125 };
 //     width: '800px',
 // };
 
-const Map = ({ activeMenu, setActiveMenu }) => {
+const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const [map, setMap] = useState(null);
     const [keyword, setKeyword] = useState("");
     const [markers, setMarkers] = useState([]);
@@ -299,6 +299,8 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                 {activeMenu === 'login' &&
                     <Login
                         setActiveMenu={setActiveMenu}
+                        setIsLoggedIn={setIsLoggedIn}
+                        setNickname={setNickname}
                     ></Login>
                 }
                 {activeMenu === 'signUp' &&
