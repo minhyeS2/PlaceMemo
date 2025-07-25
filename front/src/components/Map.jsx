@@ -7,6 +7,8 @@ import Login from './Login';
 import SignUp from './SignUp';
 import SearchBox from './SearchBox';
 import SlidingPanel from './SlidingPanel';
+import SelectMarker from './SelectMarker';
+import Memo from './Memo';
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -18,7 +20,7 @@ const center = { lat: 35.681236, lng: 139.767125 };
 //     width: '800px',
 // };
 
-const Map = ({ activeMenu, setActiveMenu }) => {
+const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const [map, setMap] = useState(null);
     const [keyword, setKeyword] = useState("");
     const [markers, setMarkers] = useState([]);
@@ -116,7 +118,7 @@ const Map = ({ activeMenu, setActiveMenu }) => {
 
                 // console.log(newMarkers);
                 setMarkers(newMarkers);
-                setIsSearchActive(true);  
+                setIsSearchActive(true);
 
                 newMarkers.forEach(m => bounds.extend(m.position));
                 mapRef.current.fitBounds(bounds);
@@ -297,6 +299,8 @@ const Map = ({ activeMenu, setActiveMenu }) => {
                 {activeMenu === 'login' &&
                     <Login
                         setActiveMenu={setActiveMenu}
+                        setIsLoggedIn={setIsLoggedIn}
+                        setNickname={setNickname}
                     ></Login>
                 }
                 {activeMenu === 'signUp' &&

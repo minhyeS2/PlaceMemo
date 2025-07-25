@@ -1,0 +1,22 @@
+.tag-total {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.clickable {
+  cursor: pointer;
+  color: #333;
+  font-size: 0.7rem;
+  padding: 6px 12px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  user-select: text;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.clickable.active {
+  color: #4caf50;
+  font-weight: bold;
+  background-color: #e8f5e9;
+}

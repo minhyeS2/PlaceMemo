@@ -10,6 +10,7 @@
 .title {
     font-weight: 1000;
     font-size: 1.5rem;
+    margin-left: 1vw;
 }
 
 .menu {
@@ -21,8 +22,8 @@
     display: flex;
     margin-top: auto;
     margin-bottom: auto;
-    margin-left: 67vw;
-
+    margin-left: auto;
+    margin-right: 5vw;
 }
 
 .active {

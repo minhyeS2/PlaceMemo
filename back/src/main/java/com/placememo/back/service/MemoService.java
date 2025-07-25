@@ -35,9 +35,13 @@ public class MemoService {
         Memo memo = new Memo();
         memo.setMember(member);
         memo.setMemoText(request.getMemoText());
+        memo.setIconUrl(request.getIconUrl());
         memo.setPlaceId(request.getPlaceId());
         memo.setPlaceName(request.getPlaceName());
-
+        memo.setPlaceLat(request.getPlaceLat());
+        memo.setPlaceLng(request.getPlaceLng());
+        memo.setPlaceAddress(request.getPlaceAddress());
+        memo.setPlaceStatus(request.getPlaceStatus());
         memoRepository.save(memo);
 
         return ResponseEntity.ok(Map.of(
@@ -57,7 +61,12 @@ public class MemoService {
             	memo.getPk(),
                 memo.getMember().getUserId(),
                 memo.getMemoText(),
+                memo.getIconUrl(),
                 memo.getPlaceName(),
+                memo.getPlaceLat(),
+                memo.getPlaceLng(),
+                memo.getPlaceAddress(),
+                memo.getPlaceStatus(),
                 memo.getCreatedAt()))
             .collect(Collectors.toList());
     }

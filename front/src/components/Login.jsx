@@ -1,8 +1,9 @@
 import './Login.css';
+import { parseJwt } from '../utils/parseJwt.js';
 
 import React, { useEffect, useState } from 'react'
 
-const Login = ({ setActiveMenu }) => {
+const Login = ({ setActiveMenu, setIsLoggedIn, setNickname }) => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [idMessage, setIdMessage] = useState('');
@@ -27,6 +28,13 @@ const Login = ({ setActiveMenu }) => {
       if (response.ok) {
         setActiveMenu('search');
         localStorage.setItem('token', data.token);
+
+        const payload = parseJwt(data.token);
+        if (payload?.nickname) {
+          setNickname(payload.nickname);
+        }
+        setIsLoggedIn(true);
+
       }
 
       console.log('token使用可能！');
@@ -55,7 +63,7 @@ const Login = ({ setActiveMenu }) => {
   return (
     <div className='login-total'>
       <div className='login'>
-      <div className='page-name'><span>LOGIN</span></div>
+        <div className='page-name'><span>LOGIN</span></div>
         <div className='id'>
           <span>ID</span>
           <div
@@ -80,9 +88,9 @@ const Login = ({ setActiveMenu }) => {
         <div className='pw-input'>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
         </div>
-        <button 
-        className='login-btn'
-        onClick={loginHandle}>Login</button>
+        <button
+          className='login-btn'
+          onClick={loginHandle}>Login</button>
       </div>
     </div>
   )

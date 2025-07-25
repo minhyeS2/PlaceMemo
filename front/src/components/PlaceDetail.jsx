@@ -14,6 +14,7 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon })
 
     const [activeTab, setActiveTab] = useState('memo');
     const [refreshTrigger, setRefreshTrigger] = useState(false);
+    const [isMemoOpen, setIsMemoOpen] = useState(false);
 
     // 메모 등록 성공 시 호출해서 목록 갱신 트리거를 바꿈
     const handleMemoAdded = () => {
@@ -24,8 +25,19 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon })
     return (
         <>
             <div className='detail-total'>
-                <div className='cancle-btn'>
-                    <button onClick={onClose}>×</button>
+                <div className='button-total'>
+                    <div className='cancel-icon'>
+                        <img
+                            src={'/icons/cancel.png'}
+                            onClick={onClose}
+                        />
+                    </div>
+                    <div className='memo-icon'>
+                        <img
+                            src={'/icons/memo.png'}
+                            onClick={() => setIsMemoOpen(prev => !prev)}
+                        />
+                    </div>
                 </div>
                 <div className='detail-box'>
                     <Swiper pagination={true} modules={[Pagination]} className="mySwiper">
@@ -44,10 +56,10 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon })
                             <RatingStar rating={detail.rating} />
                             <div className='rating-cnt'><span>{detail.userRatingCount ? `(${detail.userRatingCount}件)` : ''}</span></div>
                         </div>
-                        <div><span>{detail.formattedAddress ?? '住所なし'}</span></div>
                         <div><span>{detail.businessStatus === "OPERATIONAL" ? "営業中" :
                             detail.businessStatus === "CLOSED_TEMPORARILY" ? "一時休業中" :
                                 detail.businessStatus === "CLOSED_PERMANENTLY" ? "閉業済み" : "状態不明"}</span></div>
+                        <div><span>{detail.formattedAddress ?? '住所なし'}</span></div>
                         {/* <div><span>{detail.regularOpeningHours?.weekdayText?.join(', ') ?? '営業時間なし'}</span></div> */}
                         <div><span>{detail.internationalPhoneNumber ?? '電話番号なし'}</span></div>
                     </div>
@@ -83,25 +95,28 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon })
                     )}
                     {activeTab === 'memo' && (
                         <>
-                            <SelectMarker
-                                detail={detail}
-                                selected={selectedIcon}
-                                onSelect={setSelectedIcon}
-                            >
-                            </SelectMarker>
-                            <Memo
-                                detail={detail}
-                                onMemoAdded={handleMemoAdded}
-                            ></Memo>
                             <MemoList
                                 detail={detail}
                                 refreshTrigger={refreshTrigger}
+                                selected={selectedIcon}
+                                onSelect={setSelectedIcon}
                             ></MemoList>
                         </>
                     )}
-
                 </div>
             </div>
+
+            {isMemoOpen && (
+                <>
+                    <Memo
+                        detail={detail}
+                        onMemoAdded={handleMemoAdded}
+                        selectedIcon={selectedIcon}
+                        setSelectedIcon={setSelectedIcon}
+                    />
+                </>
+            )}
+
         </>
     )
 }

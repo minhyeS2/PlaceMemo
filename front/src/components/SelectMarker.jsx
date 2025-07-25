@@ -9,36 +9,36 @@ const iconOptions = [
   iconBaseUrl + '/marker_icons/icon4.png',
 ];
 
-const SelectMarker = ({ detail, selected, onSelect }) => {
+const SelectMarker = ({ onSelect }) => {
     const [selectedImgIdx, setSelectedImgIdx] = useState(null);
 
-    const changeIconHandle = async () => {
-        const token = localStorage.getItem('token');
-        try {
-            const response = await fetch(`http://localhost:8081/savedicon`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    placeId: detail.id,
-                    iconUrl: selected,
-                    placeLat: detail.Dg.location.lat,
-                    placeLng: detail.Dg.location.lng,
-                    placeName: detail.displayName,
-                    placeAddress: detail.formattedAddress,
-                    placeStatus: detail.businessStatus
-                })
-            });
+    // const changeIconHandle = async () => {
+    //     const token = localStorage.getItem('token');
+    //     try {
+    //         const response = await fetch(`http://localhost:8081/savedicon`, {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`
+    //             },
+    //             body: JSON.stringify({
+    //                 placeId: detail.id,
+    //                 iconUrl: selectedIcon,
+    //                 placeLat: detail.Dg.location.lat,
+    //                 placeLng: detail.Dg.location.lng,
+    //                 placeName: detail.displayName,
+    //                 placeAddress: detail.formattedAddress,
+    //                 placeStatus: detail.businessStatus
+    //             })
+    //         });
 
-            const data = await response.json();
-            alert(data.message);
-        } catch (error) {
-            console.error(error);
-            alert('Error');
-        }
-    };
+    //         const data = await response.json();
+    //         alert(data.message);
+    //     } catch (error) {
+    //         console.error(error);
+    //         alert('Error');
+    //     }
+    // };
 
     return (
         <div className='marker-total'>
@@ -55,12 +55,12 @@ const SelectMarker = ({ detail, selected, onSelect }) => {
                     />
                 </div>
             ))}
-            <button
+            {/* <button
                 className='marker-btn'
                 onClick={changeIconHandle}
             >
                 変更
-            </button>
+            </button> */}
         </div>
     );
 };

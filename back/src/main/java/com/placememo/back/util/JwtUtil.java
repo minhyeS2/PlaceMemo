@@ -20,9 +20,10 @@ public class JwtUtil {
     private final long expirationMs = 1000 * 60 * 60; 
     
     //사용자의 userId을 바탕으로 JWT 토큰을 생성
-    public String generateToken(String userId) {
+    public String generateToken(String userId, String nickname) {
         return Jwts.builder()
                 .setSubject(userId)
+                .claim("nickname", nickname)
                 .setIssuedAt(new Date()) // 최초 로그인 할때부터
                 .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
                 // 이 시간까지 쓸 수 있게 설정함
