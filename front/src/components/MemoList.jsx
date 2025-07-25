@@ -12,7 +12,7 @@ const MemoList = ({ detail, refreshTrigger }) => {
 
   const fetchMemo = async () => {
     try {
-      const response = await fetch(`http://localhost:8081/memos?placeId=${placeId}`, {
+      const response = await fetch(`http://localhost:8081/memos`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -85,11 +85,11 @@ const MemoList = ({ detail, refreshTrigger }) => {
     }
   };
 
-  useEffect(() => {
-    if (token && placeId) {
-      fetchMemo();
-    }
-  }, [placeId, token, refreshTrigger]);
+useEffect(() => {
+  if (token) {
+    fetchMemo();
+  }
+}, [token, refreshTrigger]);
 
   return (
     <div className="memo-list">
