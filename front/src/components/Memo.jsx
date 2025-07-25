@@ -1,12 +1,14 @@
 import './memo.css';
 
-import React from 'react'
+import React, { useState } from 'react';
 import SelectMarker from './SelectMarker';
+import MemoTag from './MemoTag';
 
 const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon }) => {
     const token = localStorage.getItem('token');
 
-    const [memoText, setMemoText] = React.useState('');
+    const [memoText, setMemoText] = useState('');
+    const [selectedTags, setSelectedTags] = useState([]);
 
     const memoHandle = async () => {
         try {
@@ -18,8 +20,14 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon }) => {
                 },
                 body: JSON.stringify({
                     memoText: memoText,
+                    tags : selectedTags,
                     placeId: detail.id,
                     placeName: detail.displayName,
+                    iconUrl : selectedIcon,
+                    placeLat: detail.Dg.location.lat,
+                    placeLng: detail.Dg.location.lng,
+                    placeAddress: detail.formattedAddress,
+                    placeStatus: detail.businessStatus
                 })
             });
             const data = await response.json();
@@ -42,10 +50,12 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon }) => {
 
             <SelectMarker
                 detail={detail}
-                selected={selectedIcon}
                 onSelect={setSelectedIcon}
             />
-
+            <MemoTag 
+                selectedTags={selectedTags}
+                setSelectedTags={setSelectedTags}
+            />
             <textarea
                 className="memo-content"
                 value={memoText}

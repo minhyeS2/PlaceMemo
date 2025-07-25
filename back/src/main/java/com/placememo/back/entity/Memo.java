@@ -39,10 +39,26 @@ public class Memo {
 	private String memoText;
 	
 	@Column(nullable = false)
+	private String iconUrl;
+	
+	@Column(nullable = false)
 	private String placeId;
 	
 	@Column(nullable = false)
 	private String placeName;
+	
+    
+ 	@Column(nullable = false)
+	private Double placeLat;
+	
+ 	@Column(nullable = false)
+	private Double placeLng;
+ 	
+ 	@Column(nullable = false)
+	private String placeAddress;
+	
+ 	@Column(nullable = false)
+	private String placeStatus;
 	
 	@CreationTimestamp
 	private LocalDateTime createdAt;
