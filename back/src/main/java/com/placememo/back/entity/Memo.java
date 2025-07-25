@@ -1,8 +1,10 @@
 package com.placememo.back.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,6 +39,9 @@ public class Memo {
 	
 	@Column(nullable = true, length = 1000)
 	private String memoText;
+	
+	@ElementCollection
+	private List<String> tags;
 	
 	@Column(nullable = false)
 	private String iconUrl;

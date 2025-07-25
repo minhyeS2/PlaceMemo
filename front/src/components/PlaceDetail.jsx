@@ -9,11 +9,10 @@ import Memo from './Memo.jsx';
 import MemoList from './MemoList.jsx';
 import SelectMarker from './SelectMarker.jsx';
 
-const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon }) => {
+const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, refreshTrigger, setRefreshTrigger }) => {
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음
 
     const [activeTab, setActiveTab] = useState('memo');
-    const [refreshTrigger, setRefreshTrigger] = useState(false);
     const [isMemoOpen, setIsMemoOpen] = useState(false);
 
     // 메모 등록 성공 시 호출해서 목록 갱신 트리거를 바꿈
@@ -95,12 +94,12 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon })
                     )}
                     {activeTab === 'memo' && (
                         <>
-                            <MemoList
+                            {/* <MemoList
                                 detail={detail}
                                 refreshTrigger={refreshTrigger}
                                 selected={selectedIcon}
                                 onSelect={setSelectedIcon}
-                            ></MemoList>
+                            ></MemoList> */}
                         </>
                     )}
                 </div>

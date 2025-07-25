@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.placememo.back.dto.MemoRequest;
@@ -39,13 +38,13 @@ public class MemoC {
     }
     
     @GetMapping("/memos")
-    public List<MemoResponse> getMemos(@RequestParam String placeId) {
+    public List<MemoResponse> getMemos() {
     	// 현재 로그인된 사용자의 userId 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();  // Jwt에서 setSubject(userId) 했기 때문에
     	
     	
-    	return memoService.getMemos(userId, placeId);
+    	return memoService.getAllMemos(userId);
     }
     
     @DeleteMapping("/memo-d/{pk}")

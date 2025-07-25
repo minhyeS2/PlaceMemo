@@ -35,6 +35,7 @@ public class MemoService {
         Memo memo = new Memo();
         memo.setMember(member);
         memo.setMemoText(request.getMemoText());
+        memo.setTags(request.getTags());
         memo.setIconUrl(request.getIconUrl());
         memo.setPlaceId(request.getPlaceId());
         memo.setPlaceName(request.getPlaceName());
@@ -49,7 +50,32 @@ public class MemoService {
         
     }
     
-    // 메모 조회
+    //전체 메모 조회
+    public List<MemoResponse> getAllMemos(String userId) {
+    	Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+    
+    	List<Memo> memos = memoRepository.findAllByMember(member);
+    	
+    	 return memos.stream()
+    	            .map(memo -> new MemoResponse(
+    	            	memo.getPk(),
+    	                memo.getMember().getUserId(),
+    	                memo.getMemoText(),
+    	                memo.getTags(),
+    	                memo.getIconUrl(),
+    	                memo.getPlaceName(),
+    	                memo.getPlaceLat(),
+    	                memo.getPlaceLng(),
+    	                memo.getPlaceAddress(),
+    	                memo.getPlaceStatus(),
+    	                memo.getCreatedAt()))
+    	            .collect(Collectors.toList());
+    }
+    
+    
+    
+    // 특정 가게 메모 조회
     public List<MemoResponse> getMemos(String userId, String placeId) {
         Member member = memberRepository.findByUserId(userId)
             .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
@@ -61,6 +87,7 @@ public class MemoService {
             	memo.getPk(),
                 memo.getMember().getUserId(),
                 memo.getMemoText(),
+                memo.getTags(),
                 memo.getIconUrl(),
                 memo.getPlaceName(),
                 memo.getPlaceLat(),
