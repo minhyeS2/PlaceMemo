@@ -35,6 +35,7 @@ public class MemoService {
         Memo memo = new Memo();
         memo.setMember(member);
         memo.setMemoText(request.getMemoText());
+        memo.setTags(request.getTags());
         memo.setIconUrl(request.getIconUrl());
         memo.setPlaceId(request.getPlaceId());
         memo.setPlaceName(request.getPlaceName());
@@ -61,6 +62,7 @@ public class MemoService {
             	memo.getPk(),
                 memo.getMember().getUserId(),
                 memo.getMemoText(),
+                memo.getTags(),
                 memo.getIconUrl(),
                 memo.getPlaceName(),
                 memo.getPlaceLat(),

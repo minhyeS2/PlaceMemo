@@ -20,10 +20,10 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon }) => {
                 },
                 body: JSON.stringify({
                     memoText: memoText,
+                    iconUrl : selectedIcon,
                     tags : selectedTags,
                     placeId: detail.id,
                     placeName: detail.displayName,
-                    iconUrl : selectedIcon,
                     placeLat: detail.Dg.location.lat,
                     placeLng: detail.Dg.location.lng,
                     placeAddress: detail.formattedAddress,
@@ -34,6 +34,8 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon }) => {
             alert(data.message);
             setMemoText('');
             onMemoAdded();
+
+            console.log(data.tags);
 
         } catch (error) {
             console.error(error);

@@ -1,6 +1,7 @@
 package com.placememo.back.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ public class MemoResponse {
 	private Long pk;
     private String userId;
     private String memoText;
+    private List<String> tags;
     private String iconUrl;
     private String placeName;
 	private Double placeLat;

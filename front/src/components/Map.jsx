@@ -9,6 +9,7 @@ import SearchBox from './SearchBox';
 import SlidingPanel from './SlidingPanel';
 import SelectMarker from './SelectMarker';
 import Memo from './Memo';
+import MemoList from './MemoList';
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -31,6 +32,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const [savedMarkers, setSavedMarkers] = useState([]); // 저장된 마커들 (placeId + 위치 + icon)
     const [savedSelectedMarker, setSavedSelectedMarker] = useState(null);
     const [isSearchActive, setIsSearchActive] = useState(false);
+    const [refreshTrigger, setRefreshTrigger] = useState(false);
 
 
     console.log(savedMarkers);
@@ -287,6 +289,8 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                         onClose={() => setSelectedDetail(null)} // 내부에서도 닫기 가능
                         selectedIcon={selectedIcon}
                         setSelectedIcon={setSelectedIcon}
+                        refreshTrigger={refreshTrigger}
+                        setRefreshTrigger={setRefreshTrigger}
                     />
                 )}
 
@@ -317,6 +321,14 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                         isSearchActive={isSearchActive}
                     >
                     </SearchList>
+                }
+                {activeMenu === 'my-memos' &&
+                    <MemoList
+                        detail={selectedDetail}
+                        refreshTrigger={refreshTrigger}
+                        selected={selectedIcon}
+                        onSelect={setSelectedIcon}
+                    ></MemoList>
                 }
             </div>
         </>

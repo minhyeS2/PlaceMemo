@@ -1,12 +1,18 @@
 .memo-list {
-  padding: 12px;
-  font-family: sans-serif;
-}
-
-.memo-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 12px;
+  width: 300px;
+  height: 400px;
+  position: absolute;
+  top: 8.5%;
+  right: 0%;
+  padding-top: 5vh;
+  padding-bottom: 10vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  background-color: rgba(255, 255, 255, 0.966);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
 }
 
 .memo-empty {
@@ -21,25 +27,48 @@
 }
 
 .memo-card {
+  width: 250px;
   padding: 12px;
   border-radius: 8px;
   background-color: #f9f9f9;
   border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.memo-text {
-  font-size: 0.95rem;
-  color: #212121;
-  white-space: pre-wrap;
+  gap: 5px;
 }
 
 .memo-date {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #666;
 }
+
+.memo-marker-pname{
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.memo-marker {
+  height: 20px;
+}
+
+.memo-place-name {
+  font-size: 0.8rem;
+}
+
+.memo-text {
+  font-size: 1rem;
+  color: #212121;
+  white-space: pre-wrap;
+  margin-bottom: 3vh;
+}
+
+.memo-tags {
+  font-size: 0.7rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
 
 .memo-textarea {
   width: 100%;
@@ -54,12 +83,12 @@
 
 .memo-button-group {
   display: flex;
+  justify-content: end;
   gap: 8px;
 }
 
 .memo-btn {
-  padding: 6px 12px;
-  font-size: 13px;
+  font-size: 0.7rem;
   background-color: #fff;
   color: #333;
   border: 1px solid #ccc;

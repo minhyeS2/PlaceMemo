@@ -46,6 +46,11 @@ const Header = ({ activeMenu, setActiveMenu, isLoggedIn, setIsLoggedIn, nickname
                         >
                             <span>SEARCH</span>
                         </div>
+                        <div
+                            className={activeMenu === 'my-memos' ? 'active' : 'my-memos'}
+                            onClick={() => setActiveMenu('my-memos')}>
+                            <span>MY MEMOS</span>
+                        </div>
                     </>
                 ) : (
                     <>
