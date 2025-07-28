@@ -60,7 +60,7 @@ public class MemoC {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
        
-        
+        System.out.println("아이콘 URL: " + request.getIconUrl());
         return memoService.updateMemo(request, userId, pk);
     }
     
