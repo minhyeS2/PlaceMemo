@@ -113,8 +113,8 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                     position: place.location,
                     name: place.displayName,
                     address: place.formattedAddress,
-                    businessStatus: place.businessStatus, // 가공할 필요 있음
-                    rating: place.rating, // 별점 레이팅으로 만드는 라이브러리 or 기능 만들기
+                    businessStatus: place.businessStatus,
+                    rating: place.rating,
                     ratingCnt: place.userRatingCount,
                 }));
 
@@ -214,28 +214,32 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                     }
 
                 >
-                    {/* Child components, such as markers, info windows, etc. */
-                        markers.map((marker) => (
+                    {markers.map(marker => {
+                        const isSaved = savedMarkers.some(saved => saved.placeId === marker.placeId);
+
+                        // 저장된 장소면 검색 마커는 그리지 않음
+                        if (isSaved) return null;
+
+                        return (
                             <Marker
                                 key={marker.placeId}
                                 position={marker.position}
                                 onClick={() => handleInfoWindow(marker)}
-                            >
-                            </Marker>
-                        ))
-                    }
-                    {savedMarkers.map((UserMarker) => (
+                            />
+                        );
+                    })}
+                    {savedMarkers.map(saved => (
                         <Marker
-                            key={UserMarker.pk}
+                            key={saved.pk}
                             position={{
-                                lat: Number(UserMarker.placeLat),
-                                lng: Number(UserMarker.placeLng)
+                                lat: Number(saved.placeLat),
+                                lng: Number(saved.placeLng)
                             }}
                             icon={{
-                                url: UserMarker.iconUrl,
+                                url: saved.iconUrl,
                                 scaledSize: new window.google.maps.Size(40, 40),
                             }}
-                            onClick={() => handleSavedInfoWindow(UserMarker)}
+                            onClick={() => handleSavedInfoWindow(saved)}
                         >
                         </Marker>
                     ))}
@@ -289,8 +293,8 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                         onClose={() => setSelectedDetail(null)} // 내부에서도 닫기 가능
                         selectedIcon={selectedIcon}
                         setSelectedIcon={setSelectedIcon}
-                        refreshTrigger={refreshTrigger}
                         setRefreshTrigger={setRefreshTrigger}
+                        savedMarkers={savedMarkers}
                     />
                 )}
 

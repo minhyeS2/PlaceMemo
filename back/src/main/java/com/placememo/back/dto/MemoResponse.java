@@ -16,6 +16,7 @@ public class MemoResponse {
     private List<String> tags;
     private String iconUrl;
     private String placeName;
+    private String placeId;
 	private Double placeLat;
 	private Double placeLng;
 	private String placeAddress;

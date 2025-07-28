@@ -65,6 +65,7 @@ public class MemoService {
     	                memo.getTags(),
     	                memo.getIconUrl(),
     	                memo.getPlaceName(),
+    	                memo.getPlaceId(),
     	                memo.getPlaceLat(),
     	                memo.getPlaceLng(),
     	                memo.getPlaceAddress(),
@@ -73,30 +74,6 @@ public class MemoService {
     	            .collect(Collectors.toList());
     }
     
-    
-    
-    // 특정 가게 메모 조회
-    public List<MemoResponse> getMemos(String userId, String placeId) {
-        Member member = memberRepository.findByUserId(userId)
-            .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
-
-        List<Memo> memos = memoRepository.findByMemberAndPlaceId(member, placeId);
-
-        return memos.stream()
-            .map(memo -> new MemoResponse(
-            	memo.getPk(),
-                memo.getMember().getUserId(),
-                memo.getMemoText(),
-                memo.getTags(),
-                memo.getIconUrl(),
-                memo.getPlaceName(),
-                memo.getPlaceLat(),
-                memo.getPlaceLng(),
-                memo.getPlaceAddress(),
-                memo.getPlaceStatus(),
-                memo.getCreatedAt()))
-            .collect(Collectors.toList());
-    }
     
     // 메모 삭제
     public ResponseEntity<Map<String, String>> deleteMemo(String userId, Long pk) {
@@ -128,6 +105,9 @@ public class MemoService {
         		"message", "メモを修正しました！"));
 
     }
+    
+    
+
     
     
     

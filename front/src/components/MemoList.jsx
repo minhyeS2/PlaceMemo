@@ -85,11 +85,11 @@ const MemoList = ({ detail, refreshTrigger }) => {
     }
   };
 
-useEffect(() => {
-  if (token) {
-    fetchMemo();
-  }
-}, [token, refreshTrigger]);
+  useEffect(() => {
+    if (token) {
+      fetchMemo();
+    }
+  }, [token, refreshTrigger]);
 
   return (
     <div className="memo-list">
