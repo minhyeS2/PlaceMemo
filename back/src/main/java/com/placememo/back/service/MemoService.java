@@ -98,6 +98,8 @@ public class MemoService {
                 .orElseThrow(() -> new RuntimeException("メモが見つかりません"));
     	
         memo.setMemoText(request.getMemoText());
+        memo.setIconUrl(request.getIconUrl());
+        memo.setTags(request.getTags());
         
         memoRepository.save(memo);
         
