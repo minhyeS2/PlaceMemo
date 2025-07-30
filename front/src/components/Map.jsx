@@ -141,22 +141,21 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const handleSavedInfoWindow = (UserMarker) => {
         setSavedSelectedMarker(UserMarker);
     }
-    
-    const handleMemoUpdated = (updatedMemo) => {
-        console.log("✅ 업데이트된 메모:", updatedMemo);
 
+    const handleMemoUpdated = (updatedMemo) => {
         setSavedMarkers((prev) => {
             const result = prev.map(marker => {
-                console.log("🟡 비교 중:", marker.placeId, "vs", updatedMemo.placeId);
                 if (marker.placeId === updatedMemo.placeId) {
-                    console.log("✅ 매치됨 → 아이콘 갱신");
                     return { ...marker, iconUrl: updatedMemo.iconUrl };
                 }
                 return marker;
             });
-            console.log("🟢 최종 마커 목록:", result);
             return result;
         });
+    };
+
+    const handleMemoDeleted = (deletedPk) => {
+        setSavedMarkers(prev => prev.filter(marker => marker.pk !== deletedPk));
     };
 
 
@@ -314,6 +313,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                         setRefreshTrigger={setRefreshTrigger}
                         savedMarkers={savedMarkers}
                         onMemoUpdated={handleMemoUpdated} // 메모 컴포넌트에 다시 넘겨줘서 업데이트 되도록 해야함.
+                        onMemoDeleted={handleMemoDeleted}
                     />
                 )}
 

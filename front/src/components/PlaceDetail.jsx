@@ -7,7 +7,7 @@ import { Pagination } from 'swiper/modules';
 import RatingStar from './RatingStar.jsx';
 import Memo from './Memo.jsx';
 
-const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, refreshTrigger, setRefreshTrigger, onMemoUpdated }) => {
+const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, refreshTrigger, setRefreshTrigger, onMemoUpdated, onMemoDeleted }) => {
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음
 
     const [activeTab, setActiveTab] = useState('memo');
@@ -109,6 +109,7 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, r
                         setSelectedIcon={setSelectedIcon}
                         refreshTrigger={refreshTrigger}
                         onMemoUpdated={onMemoUpdated}
+                        onMemoDeleted={onMemoDeleted}
                     />
                 </>
             )}

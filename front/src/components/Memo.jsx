@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SelectMarker from './SelectMarker';
 import MemoTag from './MemoTag';
 
-const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigger, onMemoUpdated }) => {
+const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigger, onMemoUpdated, onMemoDeleted }) => {
   const token = localStorage.getItem('token');
 
   const [memoText, setMemoText] = useState('');
@@ -68,13 +68,17 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigg
 
   // 메모 삭제 핸들러
   const deleteMemoHandle = async (pk) => {
+    console.log(pk)
     try {
       const response = await fetch(`http://localhost:8081/memo-d/${pk}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error('削除に失敗しました');
+      
       const data = await response.json();
+      onMemoDeleted?.(pk);
+      
       alert(data.message);
       fetchMemo();
     } catch (error) {
@@ -112,7 +116,6 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigg
       } else if (response.ok) {
 
         const updatedMemo = await response.json(); // ← 변경된 memo 반환되도록 백엔드 설정해줘야 함
-        console.log("콜백 호출 전:", updatedMemo);
         onMemoUpdated?.(updatedMemo);
         setIsEditing(false);
         fetchMemo();
