@@ -90,7 +90,7 @@ public class MemoService {
     }
     
     // 메모 수정
-    public ResponseEntity<Map<String, String>> updateMemo(MemoRequest request, String userId, Long pk) {
+    public MemoResponse updateMemo(MemoRequest request, String userId, Long pk) {
     	Member member = memberRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
 
@@ -99,12 +99,14 @@ public class MemoService {
     	
         memo.setMemoText(request.getMemoText());
         memo.setIconUrl(request.getIconUrl());
+        memo.setPlaceId(request.getPlaceId());
         memo.setTags(request.getTags());
+        
+       
         
         memoRepository.save(memo);
         
-        return ResponseEntity.ok(Map.of(
-        		"message", "メモを修正しました！"));
+        return new MemoResponse(memo); // DTO 리턴
 
     }
     

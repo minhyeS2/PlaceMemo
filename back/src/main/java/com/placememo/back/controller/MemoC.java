@@ -56,12 +56,13 @@ public class MemoC {
     }
     
     @PutMapping("memo-u/{pk}")
-    public ResponseEntity<Map<String, String>> updateMemo(@PathVariable Long pk, @RequestBody MemoRequest request) {
+    public ResponseEntity<MemoResponse> updateMemo(@PathVariable Long pk, @RequestBody MemoRequest request) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
        
-        System.out.println("아이콘 URL: " + request.getIconUrl());
-        return memoService.updateMemo(request, userId, pk);
+        MemoResponse updatedMemo = memoService.updateMemo(request, userId, pk);
+        
+        return ResponseEntity.ok(updatedMemo);
     }
     
     

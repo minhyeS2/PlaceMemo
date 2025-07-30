@@ -142,6 +142,23 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
         setSavedSelectedMarker(UserMarker);
     }
 
+    const handleMemoUpdated = (updatedMemo) => {
+        setSavedMarkers((prev) => {
+            const result = prev.map(marker => {
+                if (marker.placeId === updatedMemo.placeId) {
+                    return { ...marker, iconUrl: updatedMemo.iconUrl };
+                }
+                return marker;
+            });
+            return result;
+        });
+    };
+
+    const handleMemoDeleted = (deletedPk) => {
+        setSavedMarkers(prev => prev.filter(marker => marker.pk !== deletedPk));
+    };
+
+
 
 
     // placeId(고유 아이디)를 서버에 전달해서,
@@ -295,6 +312,8 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                         setSelectedIcon={setSelectedIcon}
                         setRefreshTrigger={setRefreshTrigger}
                         savedMarkers={savedMarkers}
+                        onMemoUpdated={handleMemoUpdated} // 메모 컴포넌트에 다시 넘겨줘서 업데이트 되도록 해야함.
+                        onMemoDeleted={handleMemoDeleted}
                     />
                 )}
 

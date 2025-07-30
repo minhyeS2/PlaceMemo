@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import SelectMarker from './SelectMarker';
 import MemoTag from './MemoTag';
 
-const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigger }) => {
+const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigger, onMemoUpdated, onMemoDeleted }) => {
   const token = localStorage.getItem('token');
 
   const [memoText, setMemoText] = useState('');
@@ -68,13 +68,17 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigg
 
   // 메모 삭제 핸들러
   const deleteMemoHandle = async (pk) => {
+    console.log(pk)
     try {
       const response = await fetch(`http://localhost:8081/memo-d/${pk}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!response.ok) throw new Error('削除に失敗しました');
+      
       const data = await response.json();
+      onMemoDeleted?.(pk);
+      
       alert(data.message);
       fetchMemo();
     } catch (error) {
@@ -92,12 +96,31 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigg
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ memoText, iconUrl: selectedIcon, tags: selectedTags }),
+        body: JSON.stringify({
+          memoText,
+          iconUrl: selectedIcon, 
+          tags: selectedTags, 
+          placeId: detail.id,
+          // placeName: detail.displayName,
+          // placeLat: detail.Dg.location.lat,
+          // placeLng: detail.Dg.location.lng,
+          // placeAddress: detail.formattedAddress,
+          // placeStatus: detail.businessStatus,
+        }),
       });
-      if (!response.ok) throw new Error('修正に失敗しました');
-      alert('メモを修正しました');
-      setIsEditing(false);
-      fetchMemo();
+
+      if (!response.ok) {
+
+        throw new Error('修正に失敗しました');
+  
+      } else if (response.ok) {
+
+        const updatedMemo = await response.json(); // ← 변경된 memo 반환되도록 백엔드 설정해줘야 함
+        onMemoUpdated?.(updatedMemo);
+        setIsEditing(false);
+        fetchMemo();
+        alert('メモを修正しました');
+      }
     } catch (error) {
       alert('Error');
       console.error(error);

@@ -7,7 +7,7 @@ import { Pagination } from 'swiper/modules';
 import RatingStar from './RatingStar.jsx';
 import Memo from './Memo.jsx';
 
-const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, refreshTrigger, setRefreshTrigger }) => {
+const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, refreshTrigger, setRefreshTrigger, onMemoUpdated, onMemoDeleted }) => {
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음
 
     const [activeTab, setActiveTab] = useState('memo');
@@ -63,8 +63,8 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, r
                     <div className='detail-menu'>
                         <div className={activeTab === 'review' ? 'active' : ''}
                             onClick={() => setActiveTab('review')}><span>REVIEW</span></div>
-                        <div className={activeTab === 'memo' ? 'active' : ''}
-                            onClick={() => setActiveTab('memo')}><span>STATUS</span></div>
+                        <div className={activeTab === 'status' ? 'active' : ''}
+                            onClick={() => setActiveTab('status')}><span>STATUS</span></div>
                     </div>
                     {activeTab === 'review' && detail.reviews && detail.reviews.length > 0 && (
                         <div className='detail-review-total'>
@@ -90,11 +90,11 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, r
                             </div>
                         </div>
                     )}
-                    {activeTab === 'memo' && (
+                    {activeTab === 'status' && (
                         <>
-<div><span>{detail.businessStatus === "OPERATIONAL" ? "営業中" :
-                            detail.businessStatus === "CLOSED_TEMPORARILY" ? "一時休業中" :
-                                detail.businessStatus === "CLOSED_PERMANENTLY" ? "閉業済み" : "状態不明"}</span></div>
+                            <div><span>{detail.businessStatus === "OPERATIONAL" ? "営業中" :
+                                detail.businessStatus === "CLOSED_TEMPORARILY" ? "一時休業中" :
+                                    detail.businessStatus === "CLOSED_PERMANENTLY" ? "閉業済み" : "状態不明"}</span></div>
                         </>
                     )}
                 </div>
@@ -108,6 +108,8 @@ const PlaceDetail = ({ detail, photos, onClose, selectedIcon, setSelectedIcon, r
                         selectedIcon={selectedIcon}
                         setSelectedIcon={setSelectedIcon}
                         refreshTrigger={refreshTrigger}
+                        onMemoUpdated={onMemoUpdated}
+                        onMemoDeleted={onMemoDeleted}
                     />
                 </>
             )}
