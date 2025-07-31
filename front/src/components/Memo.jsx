@@ -3,7 +3,14 @@ import React, { useState, useEffect } from 'react';
 import SelectMarker from './SelectMarker';
 import MemoTag from './MemoTag';
 
-const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigger, onMemoUpdated, onMemoDeleted }) => {
+const Memo = ({
+  detail,
+  selectedIcon,
+  setSelectedIcon,
+  refreshTrigger,
+  onMemoAdded,
+  onMemoUpdated,
+  onMemoDeleted }) => {
   const token = localStorage.getItem('token');
 
   const [memoText, setMemoText] = useState('');
@@ -54,36 +61,23 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigg
           placeStatus: detail.businessStatus,
         }),
       });
-      const data = await response.json();
-      alert(data.message);
+
+      if (!response.ok) throw new Error('메모 등록 실패');
+
+      const newMemo = await response.json();
+
+      console.log(newMemo);
+      onMemoAdded?.(newMemo); // 새 메모 데이터 전달
+
+      alert('メモを作成しました！');
+
       setMemoText('');
-      onMemoAdded();
       setIsEditing(false);
       fetchMemo();
-    } catch (error) {
-      console.error(error);
-      alert('Error');
-    }
-  };
 
-  // 메모 삭제 핸들러
-  const deleteMemoHandle = async (pk) => {
-    console.log(pk)
-    try {
-      const response = await fetch(`http://localhost:8081/memo-d/${pk}`, {
-        method: 'DELETE',
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (!response.ok) throw new Error('削除に失敗しました');
-      
-      const data = await response.json();
-      onMemoDeleted?.(pk);
-      
-      alert(data.message);
-      fetchMemo();
     } catch (error) {
-      alert('Error');
       console.error(error);
+      alert('Error');
     }
   };
 
@@ -98,8 +92,8 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigg
         },
         body: JSON.stringify({
           memoText,
-          iconUrl: selectedIcon, 
-          tags: selectedTags, 
+          iconUrl: selectedIcon,
+          tags: selectedTags,
           placeId: detail.id,
           // placeName: detail.displayName,
           // placeLat: detail.Dg.location.lat,
@@ -112,15 +106,39 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigg
       if (!response.ok) {
 
         throw new Error('修正に失敗しました');
-  
+
       } else if (response.ok) {
 
         const updatedMemo = await response.json(); // ← 변경된 memo 반환되도록 백엔드 설정해줘야 함
+
+        console.log(updatedMemo);
+
         onMemoUpdated?.(updatedMemo);
         setIsEditing(false);
         fetchMemo();
         alert('メモを修正しました');
       }
+    } catch (error) {
+      alert('Error');
+      console.error(error);
+    }
+  };
+
+  // 메모 삭제 핸들러
+  const deleteMemoHandle = async (pk) => {
+    console.log(pk)
+    try {
+      const response = await fetch(`http://localhost:8081/memo-d/${pk}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error('削除に失敗しました');
+
+      const deleteMemo = await response.json();
+      onMemoDeleted?.(pk);
+
+      alert(deleteMemo.message);
+      fetchMemo();
     } catch (error) {
       alert('Error');
       console.error(error);
@@ -151,9 +169,6 @@ const Memo = ({ detail, onMemoAdded, selectedIcon, setSelectedIcon, refreshTrigg
     }
   }, [savedMemo, loading]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div className="memo-add-total">

@@ -28,7 +28,7 @@ public class MemoC {
     private final MemoService memoService;
 
     @PostMapping("/creatememo")
-    public ResponseEntity<Map<String, String>> createMemo(@RequestBody MemoRequest request) {
+    public ResponseEntity<MemoResponse> createMemo(@RequestBody MemoRequest request) {
         // 현재 로그인된 사용자의 userId 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();  // Jwt에서 setSubject(userId) 했기 때문에

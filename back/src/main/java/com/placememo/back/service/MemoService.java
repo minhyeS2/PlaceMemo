@@ -27,7 +27,7 @@ public class MemoService {
     private final MemberRepository memberRepository;
 
     // 메모 등록
-    public ResponseEntity<Map<String, String>> createMemo(MemoRequest request, String userId) {
+    public ResponseEntity<MemoResponse> createMemo(MemoRequest request, String userId) {
         // Optional에서 Member 객체를 꺼냄
         Member member = memberRepository.findByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
@@ -45,8 +45,8 @@ public class MemoService {
         memo.setPlaceStatus(request.getPlaceStatus());
         memoRepository.save(memo);
 
-        return ResponseEntity.ok(Map.of(
-        		"message", "メモを作成しました！"));
+        MemoResponse response = new MemoResponse(memo);
+        return ResponseEntity.ok(response);
         
     }
     
