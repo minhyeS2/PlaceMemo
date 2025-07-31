@@ -26,10 +26,18 @@ public class MemoResponse {
     private LocalDateTime createdAt;
     
     public MemoResponse(Memo memo) {
+        this.pk = memo.getPk();
         this.memoText = memo.getMemoText();
-        this.iconUrl = memo.getIconUrl();
         this.tags = memo.getTags();
+        this.iconUrl = memo.getIconUrl();
         this.placeId = memo.getPlaceId();
+        this.placeName = memo.getPlaceName();
+        this.placeLat = memo.getPlaceLat();
+        this.placeLng = memo.getPlaceLng();
+        this.placeAddress = memo.getPlaceAddress();
+        this.placeStatus = memo.getPlaceStatus();
+        this.createdAt = memo.getCreatedAt();
     }
+    
     
 }

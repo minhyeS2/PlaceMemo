@@ -158,6 +158,11 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
         setSavedMarkers(prev => prev.filter(marker => marker.pk !== deletedPk));
     };
 
+    const handleMemoAdded = (newMemo) => {
+        console.log("📍 새 메모 추가됨:", newMemo); // ← 디버깅용 로그
+        setSavedMarkers(prev => [...prev, newMemo]);
+    };
+
 
 
 
@@ -312,7 +317,8 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                         setSelectedIcon={setSelectedIcon}
                         setRefreshTrigger={setRefreshTrigger}
                         savedMarkers={savedMarkers}
-                        onMemoUpdated={handleMemoUpdated} // 메모 컴포넌트에 다시 넘겨줘서 업데이트 되도록 해야함.
+                        onMemoAdded={handleMemoAdded}
+                        onMemoUpdated={handleMemoUpdated}
                         onMemoDeleted={handleMemoDeleted}
                     />
                 )}
