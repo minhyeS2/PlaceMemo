@@ -12,7 +12,7 @@ const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, s
   const token = sessionStorage.getItem('token');
   const placeId = detail?.id;
 
-  const [selectedFilter, setSelectedFilter] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('sort-f');
 
   const fetchMemo = async () => {
     try {

@@ -99,17 +99,15 @@
 }
 
 
-
 .memo-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .memo-card {
-  width: 240px;
+  width: 230px;
   padding: 12px;
   border-radius: 8px;
   background-color: #fff;
