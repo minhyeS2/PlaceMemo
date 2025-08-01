@@ -26,7 +26,7 @@ const Login = ({ setActiveMenu, setIsLoggedIn, setNickname }) => {
 
       if (response.ok) {
         setActiveMenu('search');
-        localStorage.setItem('token', data.token);
+        sessionStorage.setItem('token', data.token);
 
         const payload = parseJwt(data.token);
         if (payload?.nickname) {

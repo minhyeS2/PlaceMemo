@@ -15,8 +15,8 @@ const Memo = ({
   onMemoDeleted,
   memos,
   setMemos
-  }) => {
-  const token = localStorage.getItem('token');
+}) => {
+  const token = sessionStorage.getItem('token');
 
   const [memoText, setMemoText] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
