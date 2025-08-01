@@ -50,7 +50,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     });
 
     useEffect(() => {
-        if (isLoaded) {
+        if (isLoaded && sessionStorage.getItem("token")) {
             fetchsavedIcons();
         }
     }, [isLoaded, activeMenu]);
