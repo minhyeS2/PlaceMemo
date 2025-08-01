@@ -52,7 +52,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
         if (isLoaded) {
             fetchsavedIcons();
         }
-    }, [isLoaded]);
+    }, [isLoaded, activeMenu]);
 
 
     const onLoad = useCallback(function callback(map) {
@@ -159,7 +159,6 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     };
 
     const handleMemoAdded = (newMemo) => {
-        console.log("📍 새 메모 추가됨:", newMemo); // ← 디버깅용 로그
         setSavedMarkers(prev => [...prev, newMemo]);
     };
 

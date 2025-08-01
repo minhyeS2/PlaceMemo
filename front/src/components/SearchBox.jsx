@@ -1,22 +1,25 @@
 import './searchBox.css';
-import React from 'react'
+import React from 'react';
 
-const SerachBox = ({keyword, onChangeKeyword, onSearch}) => {
+const SearchBox = ({ keyword, onChangeKeyword, onSearch }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault(); // 폼 제출로 인한 새로고침 방지
+    onSearch();
+  };
+
   return (
-                <div className='search-total'>
-                <div className='search-input'>
-                    <input
-                        type='text'
-                        value={keyword}
-                        onChange={onChangeKeyword}
-                        placeholder='キーワードを入力してください！'
-                    ></input>
-                </div>
-                <button className='search-btn'
-                    onClick={onSearch}
-                >Search</button>
-            </div>
-  )
-}
+    <form className='search-total' onSubmit={handleSubmit}>
+      <div className='search-input'>
+        <input
+          type='text'
+          value={keyword}
+          onChange={onChangeKeyword}
+          placeholder='キーワードを入力してください！'
+        />
+      </div>
+      <button className='search-btn' type='submit'>Search</button>
+    </form>
+  );
+};
 
-export default SerachBox
+export default SearchBox;
