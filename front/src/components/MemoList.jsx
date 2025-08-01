@@ -2,12 +2,17 @@ import './memoList.css';
 
 import React, { useEffect, useState } from 'react';
 
+
+const iconBaseUrl = window.location.origin;
+const sorts = ['新しい順', '古い順'];
+const tags = ['#定番', '#再訪', '#記憶', '#景色良し', '#偶然', '#一人向き', '#混雑', '#不満'];
+
+
 const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, setMemos }) => {
   const token = sessionStorage.getItem('token');
   const placeId = detail?.id;
 
-  const [editingPk, setEditingPk] = useState(null);
-  const [editedText, setEditedText] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('');
 
   const fetchMemo = async () => {
     try {
@@ -46,27 +51,48 @@ const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, s
       {memos.length === 0 ? (
         <p className="memo-empty">メモがありません。</p>
       ) : (
-        <div className="memo-container">
-          {memos.map((memo) => (
-            <div key={memo.pk} className="memo-card"
-              onClick={() => handleMemoClick(memo)}>
-              {editingPk === memo.pk ? (
-                <>
-                  <textarea
-                    className="memo-textarea"
-                    value={editedText}
-                    onChange={(e) => setEditedText(e.target.value)}
-                  />
-                  <div className="memo-button-group">
-                    <button className="memo-btn memo-save" onClick={() => updateMemo(memo.pk)}>
-                      保存
-                    </button>
-                    <button className="memo-btn memo-cancel" onClick={cancelEditing}>
-                      キャンセル
-                    </button>
-                  </div>
-                </>
-              ) : (
+        <>
+          <div className='filter'>
+            <div
+              className={selectedFilter === 'sort-f' ? 'active-f' : 'sort-f'}
+              onClick={() => setSelectedFilter('sort-f')}
+              style={{ position: 'relative' }}  // 드롭다운 위치 기준을 위해 추가
+            >
+              並び順
+            </div>
+            <div className={selectedFilter === 'markers-f' ? 'active-f' : 'markers-f'}
+              onClick={() => setSelectedFilter('markers-f')}>マーカー</div>
+            <div className={selectedFilter === 'tags-f' ? 'active-f' : 'tags-f'}
+              onClick={() => setSelectedFilter('tags-f')}>タグ</div>
+          </div>
+          <div className='filter-menu'>
+            {selectedFilter === 'sort-f' && (
+              <div className="sort-menu">
+                {sorts.map((sort, index) => (
+                  <span key={index} className='sort-item'>{sort}</span>
+                ))}
+              </div>
+            )}
+            {selectedFilter === 'markers-f' && (
+              <div className='markers-menu'>
+                <img src={iconBaseUrl + '/marker_icons/icon1.png'} />
+                <img src={iconBaseUrl + '/marker_icons/icon2.png'} />
+                <img src={iconBaseUrl + '/marker_icons/icon3.png'} />
+                <img src={iconBaseUrl + '/marker_icons/icon4.png'} />
+              </div>
+            )}
+            {selectedFilter === 'tags-f' && (
+              <div className="tags-menu">
+                {tags.map((tag, index) => (
+                  <span key={index} className="tag-item">{tag}</span>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="memo-container">
+            {memos.map((memo) => (
+              <div key={memo.pk} className="memo-card"
+                onClick={() => handleMemoClick(memo)}>
                 <>
                   <div className="memo-date">
                     {new Date(memo.createdAt).toLocaleString()}
@@ -83,19 +109,11 @@ const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, s
                   <div className='memo-tags'>
                     {memo.tags.join(' ')}
                   </div>
-                  {/* <div className="memo-button-group">
-                    <button className="memo-btn memo-edit" onClick={() => startEditing(memo)}>
-                      修正
-                    </button>
-                    <button className="memo-btn memo-delete" onClick={() => deleteMemoHandle(memo.pk)}>
-                      削除
-                    </button>
-                  </div> */}
                 </>
-              )}
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </div>
 

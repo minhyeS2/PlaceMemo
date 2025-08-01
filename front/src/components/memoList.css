@@ -2,17 +2,16 @@
   width: 300px;
   height: 400px;
   position: absolute;
-  top: 8.5%;
+  top: 5%;
   right: 0%;
   padding-top: 5vh;
-  padding-bottom: 10vh;
+  padding-bottom: 14vh;
   padding-left: 2vw;
   padding-right: 2vw;
   background-color: rgba(255, 255, 255, 0.966);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  display: flex;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: grid;
   justify-content: center;
-  overflow-y: auto;
 }
 
 .memo-empty {
@@ -20,21 +19,109 @@
   color: #888;
 }
 
+.filter {
+  position: 'relative';
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #9b9b9b;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding-bottom: 65px;
+}
+
+.active-f {
+  color: #4caf50;
+}
+
+.filter-menu {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 11%;
+}
+
+.sort-menu {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 11%;
+  gap: 10px;
+}
+
+.sort-item {
+  padding: 2px 4px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: #919191;
+
+}
+
+.markers-menu {
+  position: absolute;
+  top: 11%;
+  display: flex;
+  gap: 10px;
+}
+
+.markers-menu>img {
+  width: 25px;
+  height: 25px;
+}
+
+
+.tags-menu {
+  position: absolute;
+  top: 11%;
+  display: flex;
+  flex-wrap: wrap;
+  /* 여러 줄로 감싸기 */
+  gap: 5px;
+  max-width: 80%;
+  /* 필요하면 너비 조정 */
+}
+
+.tags-menu>span {
+  padding: 2px 5px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: #919191;
+  flex: 1 0 21%;
+  /* 한 줄에 4개씩 차지할 크기 대략 22% */
+  box-sizing: border-box;
+  text-align: center;
+}
+
+
+
 .memo-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .memo-card {
-  width: 250px;
+  width: 240px;
   padding: 12px;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  background-color: #fff;
   border: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.memo-card:hover {
+  background-color: #f9f9f9;
+
 }
 
 .memo-date {
@@ -42,10 +129,11 @@
   color: #666;
 }
 
-.memo-marker-pname{
+.memo-marker-pname {
   display: flex;
   gap: 5px;
   align-items: center;
+  font-weight: 600;
 }
 
 .memo-marker {
@@ -79,25 +167,4 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   font-family: inherit;
-}
-
-.memo-button-group {
-  display: flex;
-  justify-content: end;
-  gap: 8px;
-}
-
-.memo-btn {
-  font-size: 0.7rem;
-  background-color: #fff;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, border 0.2s;
-}
-
-.memo-btn:hover {
-  background-color: #f5f5f5;
-  border-color: #999;
 }
