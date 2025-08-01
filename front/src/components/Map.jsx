@@ -34,6 +34,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const [isSearchActive, setIsSearchActive] = useState(false);
     const [refreshTrigger, setRefreshTrigger] = useState(false);
     const [isMemoOpen, setIsMemoOpen] = useState(false);
+    const [memos, setMemos] = useState([]);
 
     console.log(savedMarkers);
 
@@ -316,11 +317,14 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                         setSelectedIcon={setSelectedIcon}
                         setRefreshTrigger={setRefreshTrigger}
                         savedMarkers={savedMarkers}
+                        setSelectedDetail={setSelectedDetail}
                         isMemoOpen={isMemoOpen}
                         setIsMemoOpen={setIsMemoOpen}
                         onMemoAdded={handleMemoAdded}
                         onMemoUpdated={handleMemoUpdated}
                         onMemoDeleted={handleMemoDeleted}
+                        memos={memos}
+                        setMemos={setMemos}
 
                     />
                 )}
@@ -361,6 +365,8 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                         onSelect={setSelectedIcon}
                         setIsMemoOpen={setIsMemoOpen}
                         fetchDetail={fetchDetail}
+                        memos={memos}
+                        setMemos={setMemos}
                     ></MemoList>
                 }
             </div>
