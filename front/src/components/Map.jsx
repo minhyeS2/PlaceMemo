@@ -50,7 +50,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     });
 
     useEffect(() => {
-        if (isLoaded) {
+        if (isLoaded && sessionStorage.getItem("token")) {
             fetchsavedIcons();
         }
     }, [isLoaded, activeMenu]);
@@ -193,7 +193,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
 
     // 사용자별 저장된 마커 가져오기
     const fetchsavedIcons = async () => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem('token');
 
         try {
             const response = await fetch(`http://localhost:8081/icons`, {

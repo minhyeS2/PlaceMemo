@@ -3,7 +3,7 @@ import './memoList.css';
 import React, { useEffect, useState } from 'react';
 
 const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, setMemos }) => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const placeId = detail?.id;
 
   const [editingPk, setEditingPk] = useState(null);

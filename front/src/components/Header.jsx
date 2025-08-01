@@ -7,7 +7,8 @@ import React, { useEffect } from 'react';
 const Header = ({ activeMenu, setActiveMenu, isLoggedIn, setIsLoggedIn, nickname, setNickname }) => {
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
+
         if (token) {
             const payload = parseJwt(token);
             if (payload?.nickname) {
@@ -18,7 +19,7 @@ const Header = ({ activeMenu, setActiveMenu, isLoggedIn, setIsLoggedIn, nickname
     }, []);
 
     const onLogout = () => {
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('token');
         setIsLoggedIn(false);
         setNickname('');
         setActiveMenu('login');
