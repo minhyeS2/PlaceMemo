@@ -8,14 +8,18 @@ const Memo = ({
   selectedIcon,
   setSelectedIcon,
   refreshTrigger,
+  setSelectedDetail,
+  setIsMemoOpen,
   onMemoAdded,
   onMemoUpdated,
-  onMemoDeleted }) => {
+  onMemoDeleted,
+  memos,
+  setMemos
+  }) => {
   const token = localStorage.getItem('token');
 
   const [memoText, setMemoText] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
-  const [memos, setMemos] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -139,6 +143,9 @@ const Memo = ({
 
       alert(deleteMemo.message);
       fetchMemo();
+      setSelectedDetail(null);
+      setIsMemoOpen(false);
+      setMemos(prevMemos => prevMemos.filter(memo => memo.pk !== pk));
     } catch (error) {
       alert('Error');
       console.error(error);

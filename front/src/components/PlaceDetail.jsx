@@ -7,21 +7,25 @@ import { Pagination } from 'swiper/modules';
 import RatingStar from './RatingStar.jsx';
 import Memo from './Memo.jsx';
 
-const PlaceDetail = ({ 
-    detail, 
-    photos, 
-    onClose, 
-    selectedIcon, 
-    setSelectedIcon, 
-    refreshTrigger, 
-    setRefreshTrigger, 
+const PlaceDetail = ({
+    detail,
+    photos,
+    onClose,
+    selectedIcon,
+    setSelectedIcon,
+    refreshTrigger,
+    setSelectedDetail,
+    isMemoOpen,
+    setIsMemoOpen,
     onMemoAdded,
-    onMemoUpdated, 
-    onMemoDeleted }) => {
+    onMemoUpdated,
+    onMemoDeleted,
+    memos,
+    setMemos
+}) => {
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음
 
     const [activeTab, setActiveTab] = useState('memo');
-    const [isMemoOpen, setIsMemoOpen] = useState(false);
 
     // 메모 등록 성공 시 호출해서 목록 갱신 트리거를 바꿈
     // const handleMemoAdded = () => {
@@ -117,9 +121,13 @@ const PlaceDetail = ({
                         selectedIcon={selectedIcon}
                         setSelectedIcon={setSelectedIcon}
                         refreshTrigger={refreshTrigger}
+                        setSelectedDetail={setSelectedDetail}
+                        setIsMemoOpen={setIsMemoOpen}
                         onMemoAdded={onMemoAdded}
                         onMemoUpdated={onMemoUpdated}
                         onMemoDeleted={onMemoDeleted}
+                        memos={memos}
+                        setMemos={setMemos}
                     />
                 </>
             )}

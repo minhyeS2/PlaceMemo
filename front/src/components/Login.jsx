@@ -1,7 +1,6 @@
 import './Login.css';
 import { parseJwt } from '../utils/parseJwt.js';
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 
 const Login = ({ setActiveMenu, setIsLoggedIn, setNickname }) => {
   const [id, setId] = useState('');
@@ -35,35 +34,29 @@ const Login = ({ setActiveMenu, setIsLoggedIn, setNickname }) => {
         }
         setIsLoggedIn(true);
 
+        console.log('token使用可能！');
       }
-
-      console.log('token使用可能！');
     } catch (error) {
       console.error(error);
       alert('Error');
     }
   };
 
-  const checkHandle = (e) => {
-    if (id.trim() === "") {
-      setIdMessage("IDを入力してください。");
-    } else {
-      setIdMessage("");
-    }
-
-    if (password.trim() === "") {
-      setPasswordMessage("パスワードを入力してください。");
-    } else {
-      setPasswordMessage("");
-    }
-
+  const checkHandle = () => {
+    setIdMessage(id.trim() === "" ? "IDを入力してください。" : "");
+    setPasswordMessage(password.trim() === "" ? "パスワードを入力してください。" : "");
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault(); // 엔터 시 새로고침 방지
+    loginHandle();
+  };
 
   return (
     <div className='login-total'>
-      <div className='login'>
+      <form className='login' onSubmit={handleSubmit}>
         <div className='page-name'><span>LOGIN</span></div>
+
         <div className='id'>
           <span>ID</span>
           <div
@@ -74,26 +67,33 @@ const Login = ({ setActiveMenu, setIsLoggedIn, setNickname }) => {
           </div>
         </div>
         <div className='id-input'>
-          <input value={id} onChange={(e) => setId(e.target.value)}></input>
+          <input
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+          />
         </div>
+
         <div className='pw'>
           <span>PW</span>
           <div
             className="input-message"
-            style={{ color: idMessage.includes("可能") ? "green" : "red" }}
+            style={{ color: passwordMessage.includes("可能") ? "green" : "red" }}
           >
             {passwordMessage}
           </div>
         </div>
         <div className='pw-input'>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
-        <button
-          className='login-btn'
-          onClick={loginHandle}>Login</button>
-      </div>
-    </div>
-  )
-}
 
-export default Login
+        <button className='login-btn' type="submit">Login</button>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
