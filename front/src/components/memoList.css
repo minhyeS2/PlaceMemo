@@ -62,6 +62,13 @@
 
 }
 
+.sort-item.active-sort {
+  font-weight: 600;
+   color: #4caf50;
+}
+
+
+
 .markers-menu {
   position: absolute;
   top: 11%;
