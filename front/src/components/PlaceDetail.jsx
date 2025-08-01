@@ -14,14 +14,14 @@ const PlaceDetail = ({
     selectedIcon, 
     setSelectedIcon, 
     refreshTrigger, 
-    setRefreshTrigger, 
+    isMemoOpen, 
+    setIsMemoOpen,
     onMemoAdded,
     onMemoUpdated, 
     onMemoDeleted }) => {
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음
 
     const [activeTab, setActiveTab] = useState('memo');
-    const [isMemoOpen, setIsMemoOpen] = useState(false);
 
     // 메모 등록 성공 시 호출해서 목록 갱신 트리거를 바꿈
     // const handleMemoAdded = () => {

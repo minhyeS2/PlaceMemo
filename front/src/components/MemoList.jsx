@@ -2,7 +2,7 @@ import './memoList.css';
 
 import React, { useEffect, useState } from 'react';
 
-const MemoList = ({ detail, refreshTrigger }) => {
+const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail }) => {
   const token = localStorage.getItem('token');
   const placeId = detail?.id;
 
@@ -30,60 +30,11 @@ const MemoList = ({ detail, refreshTrigger }) => {
     }
   };
 
-  const deleteMemoHandle = async (pk) => {
-    try {
-      const response = await fetch(`http://localhost:8081/memo-d/${pk}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) throw new Error('削除に失敗しました');
-
-      const data = await response.json();
-      alert(data.message);
-      fetchMemo();
-    } catch (error) {
-      alert('Error');
-      console.error(error);
-    }
+  const handleMemoClick = (memo) => {
+    fetchDetail(memo.placeId);
+    setIsMemoOpen(true);
   };
 
-  const startEditing = (memo) => {
-    setEditingPk(memo.pk);
-    setEditedText(memo.memoText);
-  };
-
-  const cancelEditing = () => {
-    setEditingPk(null);
-    setEditedText('');
-  };
-
-  const updateMemo = async (pk) => {
-    try {
-      const response = await fetch(`http://localhost:8081/memo-u/${pk}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          memoText: editedText,
-        }),
-      });
-
-      if (!response.ok) throw new Error('修正に失敗しました');
-
-      alert('メモを修正しました');
-      setEditingPk(null);
-      setEditedText('');
-      fetchMemo();
-    } catch (error) {
-      alert('Error');
-      console.error(error);
-    }
-  };
 
   useEffect(() => {
     if (token) {
@@ -98,7 +49,8 @@ const MemoList = ({ detail, refreshTrigger }) => {
       ) : (
         <div className="memo-container">
           {memos.map((memo) => (
-            <div key={memo.pk} className="memo-card">
+            <div key={memo.pk} className="memo-card"
+              onClick={() => handleMemoClick(memo)}>
               {editingPk === memo.pk ? (
                 <>
                   <textarea
@@ -132,14 +84,14 @@ const MemoList = ({ detail, refreshTrigger }) => {
                   <div className='memo-tags'>
                     {memo.tags.join(' ')}
                   </div>
-                  <div className="memo-button-group">
+                  {/* <div className="memo-button-group">
                     <button className="memo-btn memo-edit" onClick={() => startEditing(memo)}>
                       修正
                     </button>
                     <button className="memo-btn memo-delete" onClick={() => deleteMemoHandle(memo.pk)}>
                       削除
                     </button>
-                  </div>
+                  </div> */}
                 </>
               )}
             </div>
