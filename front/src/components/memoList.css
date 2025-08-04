@@ -2,14 +2,12 @@
   width: 300px;
   height: 400px;
   position: absolute;
-  top: 5%;
+  top: 21%;
   right: 0%;
-  padding-top: 5vh;
-  padding-bottom: 14vh;
+  padding-top: 3vh;
   padding-left: 2vw;
   padding-right: 2vw;
   background-color: rgba(255, 255, 255, 0.966);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   display: grid;
   justify-content: center;
 }
@@ -19,97 +17,13 @@
   color: #888;
 }
 
-.filter {
-  position: 'relative';
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  color: #9b9b9b;
-  font-size: 0.8rem;
-  font-weight: 500;
-  padding-bottom: 65px;
-}
-
-.active-f {
-  color: #4caf50;
-}
-
-.filter-menu {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 11%;
-}
-
-.sort-menu {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 11%;
-  gap: 10px;
-}
-
-.sort-item {
-  padding: 2px 4px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  color: #919191;
-
-}
-
-.sort-item.active-sort {
-  font-weight: 600;
-   color: #4caf50;
-}
-
-
-
-.markers-menu {
-  position: absolute;
-  top: 11%;
-  display: flex;
-  gap: 10px;
-}
-
-.markers-menu>img {
-  width: 25px;
-  height: 25px;
-}
-
-
-.tags-menu {
-  position: absolute;
-  top: 11%;
-  display: flex;
-  flex-wrap: wrap;
-  /* 여러 줄로 감싸기 */
-  gap: 5px;
-  max-width: 80%;
-  /* 필요하면 너비 조정 */
-}
-
-.tags-menu>span {
-  padding: 2px 5px;
-  background-color: #f0f0f0;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  color: #919191;
-  flex: 1 0 21%;
-  /* 한 줄에 4개씩 차지할 크기 대략 22% */
-  box-sizing: border-box;
-  text-align: center;
-}
-
 
 .memo-container {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   overflow-y: scroll;
 }
 

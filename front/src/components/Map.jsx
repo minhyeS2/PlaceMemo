@@ -10,6 +10,8 @@ import SlidingPanel from './SlidingPanel';
 import SelectMarker from './SelectMarker';
 import Memo from './Memo';
 import MemoList from './MemoList';
+import MemoFilter from './MemoFilter';
+import { MemoProvider } from './MemoContext';
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -358,16 +360,17 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                     </SearchList>
                 }
                 {activeMenu === 'my-memos' &&
-                    <MemoList
-                        detail={selectedDetail}
-                        refreshTrigger={refreshTrigger}
-                        selected={selectedIcon}
-                        onSelect={setSelectedIcon}
-                        setIsMemoOpen={setIsMemoOpen}
-                        fetchDetail={fetchDetail}
-                        memos={memos}
-                        setMemos={setMemos}
-                    ></MemoList>
+                    <>
+                        <MemoProvider>
+                            <MemoFilter
+                            ></MemoFilter>
+                            <MemoList
+                                refreshTrigger={refreshTrigger}
+                                setIsMemoOpen={setIsMemoOpen}
+                                fetchDetail={fetchDetail}
+                            ></MemoList>
+                        </MemoProvider>
+                    </>
                 }
             </div>
         </>
