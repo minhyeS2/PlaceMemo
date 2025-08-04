@@ -4,6 +4,12 @@ import React, { useEffect, useState } from 'react';
 
 
 const iconBaseUrl = window.location.origin;
+const iconOptions = [
+    iconBaseUrl + '/marker_icons/icon1.png',
+    iconBaseUrl + '/marker_icons/icon2.png',
+    iconBaseUrl + '/marker_icons/icon3.png',
+    iconBaseUrl + '/marker_icons/icon4.png',
+];
 const sorts = ['新しい順', '古い順'];
 const tags = ['#定番', '#再訪', '#記憶', '#景色良し', '#偶然', '#一人向き', '#混雑', '#不満'];
 
@@ -12,7 +18,8 @@ const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, s
   const token = sessionStorage.getItem('token');
   const placeId = detail?.id;
 
-  const [selectedFilter, setSelectedFilter] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('sort-f');
+  const [selectedSort, setSelectedSort] = useState('newest');
 
   const fetchMemo = async () => {
     try {
@@ -38,6 +45,17 @@ const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, s
     fetchDetail(memo.placeId);
     setIsMemoOpen(true);
   };
+
+  // 메모 정렬
+  const sortedMemos = [...memos].sort((a, b) => {
+    if (selectedSort === 'newest') {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    } else if (selectedSort === 'oldest') {
+      return new Date(a.createdAt) - new Date(b.createdAt);
+    } else {
+      return 0; // 기본 정렬 (변경 필요시 추가)
+    }
+  });
 
 
   useEffect(() => {
@@ -68,17 +86,25 @@ const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, s
           <div className='filter-menu'>
             {selectedFilter === 'sort-f' && (
               <div className="sort-menu">
-                {sorts.map((sort, index) => (
-                  <span key={index} className='sort-item'>{sort}</span>
-                ))}
+                {sorts.map((sort, index) => {
+                  const sortValue = sort === '新しい順' ? 'newest' : 'oldest';
+                  return (
+                    <span
+                      key={index}
+                      className={`sort-item ${selectedSort === sortValue ? 'active-sort' : ''}`}
+                      onClick={() => setSelectedSort(sortValue)}
+                    >
+                      {sort}
+                    </span>
+                  );
+                })}
               </div>
             )}
             {selectedFilter === 'markers-f' && (
               <div className='markers-menu'>
-                <img src={iconBaseUrl + '/marker_icons/icon1.png'} />
-                <img src={iconBaseUrl + '/marker_icons/icon2.png'} />
-                <img src={iconBaseUrl + '/marker_icons/icon3.png'} />
-                <img src={iconBaseUrl + '/marker_icons/icon4.png'} />
+                {iconOptions.map((icon, index) => (
+                  <img src={icon}/>
+                ))}
               </div>
             )}
             {selectedFilter === 'tags-f' && (
@@ -90,18 +116,15 @@ const MemoList = ({ detail, refreshTrigger, setIsMemoOpen, fetchDetail, memos, s
             )}
           </div>
           <div className="memo-container">
-            {memos.map((memo) => (
-              <div key={memo.pk} className="memo-card"
-                onClick={() => handleMemoClick(memo)}>
+            {sortedMemos.map((memo) => (
+              <div key={memo.pk} className="memo-card" onClick={() => handleMemoClick(memo)}>
                 <>
                   <div className="memo-date">
                     {new Date(memo.createdAt).toLocaleString()}
                   </div>
                   <div className='memo-marker-pname'>
                     {memo.iconUrl && (
-                      <img
-                        className='memo-marker'
-                        src={memo.iconUrl} />
+                      <img className='memo-marker' src={memo.iconUrl} />
                     )}
                     <div className='memo-place-name'>{memo.placeName}</div>
                   </div>
