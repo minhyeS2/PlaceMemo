@@ -127,6 +127,7 @@ const MemoFilter = () => {
                                         fetchMemo();
                                     } else {
                                         setSelectedSortedMarker(icon);
+                                        setSelectedSortedTags([]); // 태그 선택 해제
                                         sortedMemosWithMarkers(icon);
                                     }
                                 }}
@@ -153,6 +154,7 @@ const MemoFilter = () => {
                                     }
 
                                     setSelectedSortedTags(newTags);
+                                    setSelectedSortedMarker(null);  // 마커 선택 해제
                                     sortedMemosWithTags(newTags);
                                 }}
                             >
