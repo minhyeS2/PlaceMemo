@@ -7,29 +7,9 @@ import { MemoContext } from './MemoContext';
 const MemoList = ({ refreshTrigger, setIsMemoOpen, fetchDetail }) => {
   const token = sessionStorage.getItem('token');
   const { 
+    fetchMemo,
     memos,
-    setMemos, 
     sortedMemos } = useContext(MemoContext);
-
-  const fetchMemo = async () => {
-    try {
-      const response = await fetch(`http://localhost:8081/memos`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('メモの取得に失敗しました');
-      }
-
-      const data = await response.json();
-      setMemos(data);
-    } catch (error) {
-      console.error(error);
-      alert('メモ取得エラー');
-    }
-  };
 
   const handleMemoClick = (memo) => {
     fetchDetail(memo.placeId);
