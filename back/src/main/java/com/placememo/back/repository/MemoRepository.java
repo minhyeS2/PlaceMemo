@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.placememo.back.entity.Member;
@@ -22,5 +24,21 @@ public interface MemoRepository extends JpaRepository<Memo, Long>{
 	
 	// 특정 마커별 필터링
 	List<Memo> findByMemberAndIconUrl(Member member, String iconUrl);
+	
+	// 특정 태그별 필터링
+	@Query("""
+		    SELECT m FROM Memo m
+		    JOIN m.tags t
+		    WHERE m.member = :member AND t IN :tags
+		    GROUP BY m
+		    HAVING COUNT(DISTINCT t) = :tagCount
+		""")
+	List<Memo> findByAllTags(
+		    @Param("member") Member member,
+		    @Param("tags") List<String> tags,
+		    @Param("tagCount") long tagCount
+		);
+	
+	
 	
 }

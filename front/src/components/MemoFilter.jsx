@@ -25,6 +25,8 @@ const MemoFilter = () => {
         setSelectedFilter,
         selectedSortedMarker,
         setSelectedSortedMarker,
+        selectedSortedTags,
+        setSelectedSortedTags
     } = useContext(MemoContext);
 
     const sortedMemosWithMarkers = async (iconUrl) => {
@@ -37,6 +39,32 @@ const MemoFilter = () => {
             if (!response.ok) throw new Error('Failed to fetch');
             const markerData = await response.json();
             setMemos(markerData);
+        } catch (error) {
+            console.error(error);
+            alert('メモ取得エラー');
+        }
+    };
+
+    const sortedMemosWithTags = async (tags) => {
+        if (tags.length === 0) {
+            fetchMemo(); // 전체 메모 다시 불러오기
+            return;
+        }
+
+        const params = new URLSearchParams();
+        tags.forEach(tag => params.append('tags', tag));
+
+        try {
+            const response = await fetch(`http://localhost:8081/tag-sorted?${params.toString()}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) throw new Error('Failed to fetch');
+
+            const tagsData = await response.json();
+            setMemos(tagsData);
         } catch (error) {
             console.error(error);
             alert('メモ取得エラー');
@@ -66,6 +94,7 @@ const MemoFilter = () => {
                     タグ
                 </div>
             </div>
+
             <div className='filter-menu'>
                 {selectedFilter === 'sort-f' && (
                     <div className="sort-menu">
@@ -74,7 +103,7 @@ const MemoFilter = () => {
                             return (
                                 <span
                                     key={index}
-                                    className={`sort-item ${selectedSort === sortValue ? 'active-sort' : ''}`}
+                                    className={`sort-item ${selectedSort === sortValue ? 'selected-sort' : ''}`}
                                     onClick={() => setSelectedSort(sortValue)}
                                 >
                                     {sort}
@@ -83,6 +112,7 @@ const MemoFilter = () => {
                         })}
                     </div>
                 )}
+
                 {selectedFilter === 'markers-f' && (
                     <div className='markers-menu'>
                         {iconOptions.map((icon, idx) => (
@@ -90,10 +120,9 @@ const MemoFilter = () => {
                                 key={idx}
                                 src={icon}
                                 alt={`marker-${idx}`}
-                                className={selectedSortedMarker === icon ? 'selected' : ''}
+                                className={selectedSortedMarker === icon ? 'selected-icon' : ''}
                                 onClick={() => {
                                     if (selectedSortedMarker === icon) {
-                                        // 이미 선택된 마커 → 해제
                                         setSelectedSortedMarker(null);
                                         fetchMemo();
                                     } else {
@@ -106,10 +135,27 @@ const MemoFilter = () => {
                         ))}
                     </div>
                 )}
+
                 {selectedFilter === 'tags-f' && (
                     <div className="tags-menu">
                         {tags.map((tag, index) => (
-                            <span key={index} className="tag-item">
+                            <span
+                                key={index}
+                                className={selectedSortedTags.includes(tag) ? 'selected-tag-item' : ''}
+                                onClick={() => {
+                                    let newTags;
+                                    if (selectedSortedTags.includes(tag)) {
+                                        // 해제
+                                        newTags = selectedSortedTags.filter(t => t !== tag);
+                                    } else {
+                                        // 추가
+                                        newTags = [...selectedSortedTags, tag];
+                                    }
+
+                                    setSelectedSortedTags(newTags);
+                                    sortedMemosWithTags(newTags);
+                                }}
+                            >
                                 {tag}
                             </span>
                         ))}

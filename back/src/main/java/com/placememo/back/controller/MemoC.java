@@ -75,6 +75,17 @@ public class MemoC {
         return memoService.getSortedMarkers(userId, iconUrl);
     }
     
+    @GetMapping("/tag-sorted")
+    public List<MemoResponse> getMemosByTags(@RequestParam List<String> tags) {
+
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        long tagCount = tags.size();
+
+        return memoService.getSortedTags(userId, tags, tagCount);
+    }
+    
+    
     
     
     
