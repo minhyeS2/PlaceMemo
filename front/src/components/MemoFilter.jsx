@@ -17,6 +17,7 @@ const MemoFilter = () => {
     const token = sessionStorage.getItem('token');
 
     const {
+        fetchMemo,
         setMemos,
         selectedSort,
         setSelectedSort,
@@ -89,9 +90,16 @@ const MemoFilter = () => {
                                 key={idx}
                                 src={icon}
                                 alt={`marker-${idx}`}
+                                className={selectedSortedMarker === icon ? 'selected' : ''}
                                 onClick={() => {
-                                    setSelectedSortedMarker(icon);
-                                    sortedMemosWithMarkers(icon);
+                                    if (selectedSortedMarker === icon) {
+                                        // 이미 선택된 마커 → 해제
+                                        setSelectedSortedMarker(null);
+                                        fetchMemo();
+                                    } else {
+                                        setSelectedSortedMarker(icon);
+                                        sortedMemosWithMarkers(icon);
+                                    }
                                 }}
                                 style={{ cursor: 'pointer' }}
                             />

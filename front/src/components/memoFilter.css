@@ -66,6 +66,19 @@
 .markers-menu>img {
   width: 25px;
   height: 25px;
+  border: 2px solid #f0f0f0;
+  transition: border-color 0.3s ease;
+  z-index: 110;
+}
+
+/* 마우스 호버 시 */
+.markers-menu img:hover {
+  border-color: #4caf50;
+}
+
+/* 선택된 상태 */
+img.selected {
+  border-color: #4caf50 !important;
 }
 
 
