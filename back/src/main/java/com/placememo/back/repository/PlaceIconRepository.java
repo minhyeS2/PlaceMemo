@@ -18,4 +18,5 @@ public interface PlaceIconRepository extends JpaRepository<PlaceIcon, Long> {
 	// 회원의 전체 마커 조회
 	List<PlaceIcon> findAllByMember(Member member);
 	
+	
 }

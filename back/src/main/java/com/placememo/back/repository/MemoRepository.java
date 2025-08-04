@@ -20,5 +20,7 @@ public interface MemoRepository extends JpaRepository<Memo, Long>{
 	// 회원의 특정 메모 삭제
 	Optional<Memo> findByMemberAndPk(Member member, Long pk);
 	
-	// 필터링 할 것들 나중에 추가
+	// 특정 마커별 필터링
+	List<Memo> findByMemberAndIconUrl(Member member, String iconUrl);
+	
 }

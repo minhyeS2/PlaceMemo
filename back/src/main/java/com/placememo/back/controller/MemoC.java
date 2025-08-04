@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.placememo.back.dto.MemoRequest;
@@ -19,6 +20,7 @@ import com.placememo.back.dto.MemoResponse;
 import com.placememo.back.service.MemoService;
 
 import lombok.RequiredArgsConstructor;
+
 
 
 @RequiredArgsConstructor
@@ -55,7 +57,7 @@ public class MemoC {
         return memoService.deleteMemo(userId, pk);
     }
     
-    @PutMapping("memo-u/{pk}")
+    @PutMapping("/memo-u/{pk}")
     public ResponseEntity<MemoResponse> updateMemo(@PathVariable Long pk, @RequestBody MemoRequest request) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
@@ -64,6 +66,15 @@ public class MemoC {
         
         return ResponseEntity.ok(updatedMemo);
     }
+    
+    @GetMapping("/marker-sorted")
+    public List<MemoResponse> getSortedMarkers(@RequestParam String iconUrl) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        
+        return memoService.getSortedMarkers(userId, iconUrl);
+    }
+    
     
     
     

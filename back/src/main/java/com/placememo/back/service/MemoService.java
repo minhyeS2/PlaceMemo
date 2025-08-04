@@ -110,7 +110,30 @@ public class MemoService {
 
     }
     
-    
+    // 특정 마커별 필터링 기능
+	public List<MemoResponse> getSortedMarkers(String userId, String iconUrl) {
+		Member member = memberRepository.findByUserId(userId)
+				.orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+
+		List<Memo> memos = memoRepository.findByMemberAndIconUrl(member, iconUrl);
+		
+		return memos.stream()
+	            .map(memo -> new MemoResponse(
+	            	memo.getPk(),
+	                memo.getMember().getUserId(),
+	                memo.getMemoText(),
+	                memo.getTags(),
+	                memo.getIconUrl(),
+	                memo.getPlaceName(),
+	                memo.getPlaceId(),
+	                memo.getPlaceLat(),
+	                memo.getPlaceLng(),
+	                memo.getPlaceAddress(),
+	                memo.getPlaceStatus(),
+	                memo.getCreatedAt()))
+	            .collect(Collectors.toList());
+
+	}
 
     
     

@@ -1,0 +1,92 @@
+.filter-total {
+  width: 300px;
+  height: 400px;
+  position: absolute;
+  top: 8%;
+  right: 0%;
+  padding-top: 2vh;
+  padding-bottom: 5vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  background-color: rgba(255, 255, 255, 0.966);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.filter {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: #9b9b9b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.active-f {
+  color: #4caf50;
+}
+
+.filter-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sort-menu {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.sort-item {
+  padding: 2px 4px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: #919191;
+
+}
+
+.sort-item.active-sort {
+  font-weight: 600;
+  color: #4caf50;
+}
+
+
+.markers-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.markers-menu>img {
+  width: 25px;
+  height: 25px;
+}
+
+
+.tags-menu {
+  position: absolute;
+  top: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 80%;
+  z-index: 100;
+}
+
+.tags-menu>span {
+  padding: 2px 5px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  color: #919191;
+  flex: 1 0 21%;
+  /* 한 줄에 4개씩 차지할 크기 대략 22% */
+  box-sizing: border-box;
+  text-align: center;
+}
