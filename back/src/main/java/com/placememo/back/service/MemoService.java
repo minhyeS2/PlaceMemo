@@ -134,10 +134,31 @@ public class MemoService {
 	            .collect(Collectors.toList());
 
 	}
-
-    
-    
-    
-    
-    
+	
+	// 특정 태그별 필터링 기능
+	public List<MemoResponse> getSortedTags(String userId, List<String> tags, long tagCount) {
+		Member member = memberRepository.findByUserId(userId)
+				.orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+	
+		
+		List<Memo> memos = memoRepository.findByAllTags(member, tags, tagCount);
+		
+		return memos.stream()
+	            .map(memo -> new MemoResponse(
+	            	memo.getPk(),
+	                memo.getMember().getUserId(),
+	                memo.getMemoText(),
+	                memo.getTags(),
+	                memo.getIconUrl(),
+	                memo.getPlaceName(),
+	                memo.getPlaceId(),
+	                memo.getPlaceLat(),
+	                memo.getPlaceLng(),
+	                memo.getPlaceAddress(),
+	                memo.getPlaceStatus(),
+	                memo.getCreatedAt()))
+	            .collect(Collectors.toList());
+		
+	}
+ 
 }

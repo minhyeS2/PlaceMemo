@@ -8,6 +8,7 @@ export const MemoProvider = ({ children }) => {
     const [selectedSort, setSelectedSort] = useState('newest');
     const [selectedFilter, setSelectedFilter] = useState('sort-f');
     const [selectedSortedMarker, setSelectedSortedMarker] = useState(null);
+    const [selectedSortedTags, setSelectedSortedTags] = useState([]);
 
     const fetchMemo = async () => {
          const token = sessionStorage.getItem('token');
@@ -51,11 +52,13 @@ export const MemoProvider = ({ children }) => {
                 setMemos,
                 selectedSort,
                 setSelectedSort,
+                sortedMemos,
                 selectedFilter,
                 setSelectedFilter,
                 selectedSortedMarker,
                 setSelectedSortedMarker,
-                sortedMemos,
+                selectedSortedTags, 
+                setSelectedSortedTags
             }}
         >
             {children}
