@@ -27,7 +27,10 @@ const Header = ({ activeMenu, setActiveMenu, isLoggedIn, setIsLoggedIn, nickname
 
     return (
         <div className='header'>
-            <div className='title'>
+            <div className='title'
+                style={{ cursor: 'pointer', userSelect: 'none' }}
+                onClick={() => window.location.reload()}
+            >
                 <span>PlaceMemo !</span>
             </div>
             <div className='menu'>
