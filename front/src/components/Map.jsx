@@ -31,12 +31,13 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const [selectedDetail, setSelectedDetail] = useState(null);
     const [photos, setPhotos] = useState(null);
     const [selectedIcon, setSelectedIcon] = useState("");
-    const [savedMarkers, setSavedMarkers] = useState([]); // 저장된 마커들 (placeId + 위치 + icon)
+    const [savedMarkers, setSavedMarkers] = useState([]);
     const [savedSelectedMarker, setSavedSelectedMarker] = useState(null);
     const [isSearchActive, setIsSearchActive] = useState(false);
     const [refreshTrigger, setRefreshTrigger] = useState(false);
     const [isMemoOpen, setIsMemoOpen] = useState(false);
     const [memos, setMemos] = useState([]);
+    const [mapCenter, setMapCenter] = useState(center); // 지도의 현재 중심을 저장할 상태 변수 추가
 
     console.log(savedMarkers);
 
@@ -76,13 +77,13 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
         setSelectedMarker(null);
     };
 
-    const createSearchRequest = (keyword) => ({
+    const createSearchRequest = (keyword, bounds) => ({
         textQuery: keyword,
         fields: ['displayName', 'location', 'formattedAddress',
             'businessStatus', 'rating', 'userRatingCount',],
         language: 'ja-JP',
         region: 'jp',
-        locationBias: center,
+        locationRestriction: bounds,
         // useStrictTypeFiltering: false,
     });
 
@@ -102,7 +103,8 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
         clearMarker();
         clearInfoWindow();
 
-        const request = createSearchRequest(keyword);
+        const bounds = map.getBounds();
+        const request = createSearchRequest(keyword, bounds);
 
         try {
             const { places } = await google.maps.places.Place.searchByText(request);
@@ -127,6 +129,8 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
 
                 newMarkers.forEach(m => bounds.extend(m.position));
                 mapRef.current.fitBounds(bounds);
+
+
 
             } else {
                 console.log("検索結果が見つかりませんでした。");
@@ -165,6 +169,13 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
         setSavedMarkers(prev => [...prev, newMemo]);
     };
 
+    const handleMapDragEnd = () => {
+        if (map) {
+            const newCenter = map.getCenter().toJSON();
+            console.log('지도 이동 후 새로운 중심 좌표:', newCenter);  // 여기 추가
+            setMapCenter(newCenter);
+        }
+    };
 
 
 
@@ -226,7 +237,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
             <div className='map-total'>
                 <GoogleMap
                     mapContainerClassName="map-container"
-                    center={center}
+                    center={mapCenter}
                     zoom={13}
                     onLoad={onLoad}
                     onUnmount={onUnmount}
@@ -236,6 +247,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                             disableDefaultUI: true
                         }
                     }
+                    onDragEnd={handleMapDragEnd}
 
                 >
                     {markers.map(marker => {
