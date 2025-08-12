@@ -1,10 +1,33 @@
 .map-total {
-    display: flex;
-    position: relative;
-  }
-
-.map-container {
-    width: 100vw;
-    height: 100vh;
+  display: flex;
+  position: relative;
 }
 
+.map-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.info-window-total {
+  margin-bottom: 300px;
+}
+
+.info-window {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.info-store {
+  font-weight: bold;
+  font-size: 1.2em;
+  /* cursor: pointer; */
+}
+
+.info-address {
+  max-width: 400px;
+  font-size: 0.8rem;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
