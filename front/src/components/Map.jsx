@@ -284,10 +284,20 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                             position={selectedMarker.position}
                             onCloseClick={() => setSelectedMarker(null)}
                         >
-                            <div>
-                                <h3>{selectedMarker.name}</h3>
-                                <p>{selectedMarker.address}</p>
-                                <p>{selectedMarker.businessStatus}</p>
+                            <div className='info-window'>
+                                <div className='info-status'>
+                                    <span>
+                                        {selectedMarker.businessStatus === "OPERATIONAL" ? "営業中" :
+                                            selectedMarker.businessStatus === "CLOSED_TEMPORARILY" ? "一時休業中" :
+                                                selectedMarker.businessStatus === "CLOSED_PERMANENTLY" ? "閉業済み" :
+                                                    "状態不明"}
+                                    </span>
+                                </div>
+                                <div className='info-store'
+                                    // onClick={() => fetchDetail(selectedMarker.placeId)}
+                                ><span>{selectedMarker.name}</span>
+                                </div>
+                                <div className='info-address'><span>{selectedMarker.address}</span></div>
                             </div>
                         </InfoWindow>
                     )
@@ -300,10 +310,20 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                             }}
                             onCloseClick={() => setSavedSelectedMarker(null)}
                         >
-                            <div>
-                                <h3>{savedSelectedMarker.placeName}</h3>
-                                <p>{savedSelectedMarker.placeAddress}</p>
-                                <p>{savedSelectedMarker.placeStatus}</p>
+                            <div className='info-window'>
+                                <div className='info-status'>
+                                    <span>
+                                        {savedSelectedMarker.placeStatus === "OPERATIONAL" ? "営業中" :
+                                            savedSelectedMarker.placeStatus === "CLOSED_TEMPORARILY" ? "一時休業中" :
+                                                savedSelectedMarker.placeStatus === "CLOSED_PERMANENTLY" ? "閉業済み" :
+                                                    "状態不明"}
+                                    </span>
+                                </div>
+                                <div className='info-store'
+                                    // onClick={() => fetchDetail(savedSelectedMarker.placeId)}
+                                ><span>{savedSelectedMarker.placeName}</span>
+                                </div>
+                                <div className='info-address'><span>{savedSelectedMarker.placeAddress}</span></div>
                             </div>
                         </InfoWindow>
                     )
