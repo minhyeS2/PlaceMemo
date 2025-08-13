@@ -26,12 +26,15 @@ const PlaceDetail = ({
     if (!detail) return null;  // detail이 없으면 아무것도 렌더링하지 않음
 
     const [activeTab, setActiveTab] = useState('memo');
+    // 리뷰별 확장 상태 관리용
+    const [expandedReviews, setExpandedReviews] = useState({});
 
-    // 메모 등록 성공 시 호출해서 목록 갱신 트리거를 바꿈
-    // const handleMemoAdded = () => {
-    //     setRefreshTrigger(prev => !prev);
-    // };
-
+    const toggleReviewExpand = (idx) => {
+        setExpandedReviews(prev => ({
+            ...prev,
+            [idx]: !prev[idx],
+        }));
+    };
 
     return (
         <>
@@ -40,13 +43,17 @@ const PlaceDetail = ({
                     <div className='cancel-icon'>
                         <img
                             src={'/icons/cancel.png'}
+                            alt="close"
                             onClick={onClose}
+                            style={{ cursor: 'pointer' }}
                         />
                     </div>
                     <div className='memo-icon'>
                         <img
                             src={'/icons/memo.png'}
+                            alt="memo"
                             onClick={() => setIsMemoOpen(prev => !prev)}
+                            style={{ cursor: 'pointer' }}
                         />
                     </div>
                 </div>
@@ -55,7 +62,7 @@ const PlaceDetail = ({
                         {photos.map((url, idx) => (
                             <SwiperSlide key={idx}>
                                 <div className='detail-pic'>
-                                    <img src={url} alt={`place-photo-${idx}`}></img>
+                                    <img src={url} alt={`place-photo-${idx}`} />
                                 </div>
                             </SwiperSlide>
                         ))}
@@ -75,32 +82,61 @@ const PlaceDetail = ({
                         <div><span>{detail.internationalPhoneNumber ?? '電話番号なし'}</span></div>
                     </div>
                     <div className='detail-menu'>
-                        <div className={activeTab === 'review' ? 'active' : ''}
-                            onClick={() => setActiveTab('review')}><span>REVIEW</span></div>
-                        <div className={activeTab === 'status' ? 'active' : ''}
-                            onClick={() => setActiveTab('status')}><span>STATUS</span></div>
+                        <div
+                            className={activeTab === 'review' ? 'active' : ''}
+                            onClick={() => setActiveTab(prev => (prev === 'review' ? '' : 'review'))}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <span>REVIEW</span>
+                        </div>
+                        {/* <div className={activeTab === 'status' ? 'active' : ''}
+                            onClick={() => setActiveTab('status')}><span>STATUS</span></div> */}
                     </div>
                     {activeTab === 'review' && detail.reviews && detail.reviews.length > 0 && (
                         <div className='detail-review-total'>
                             <div className='review-box'>
-                                {detail.reviews.map((review, idx) => (
-                                    <div key={idx} className='review-info-box'>
-                                        <div className='review-info'>
-                                            <div className='review-name'><span>{review.authorAttribution.displayName ?? '名前なし'}</span></div>
-                                            <div className='review-rating'>
-                                                {/* <div><span>{review.rating ?? 'なし'}</span></div> */}
-                                                <RatingStar rating={review.rating} />
-                                                <div className='rating-cnt'><span>{review.relativePublishTimeDescription ?? '日付不明'}</span></div>
+                                {detail.reviews.map((review, idx) => {
+                                    const limit = 100;
+                                    const text = review.text ?? 'レビューなし';
+                                    const isLong = text.length > limit;
+                                    const isExpanded = expandedReviews[idx] || false;
+                                    const displayText = isExpanded || !isLong ? text : text.slice(0, limit) + ' ...';
+
+                                    return (
+                                        <div key={idx} className='review-info-box'>
+                                            <div className='review-info'>
+                                                <div className='review-name'>
+                                                    <span>{review.authorAttribution?.displayName ?? '名前なし'}</span>
+                                                </div>
+                                                <div className='review-rating'>
+                                                    <RatingStar rating={review.rating} />
+                                                    <div className='rating-cnt'>
+                                                        <span>{review.relativePublishTimeDescription ?? '日付不明'}</span>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className='review-text'
+                                                    style={{ cursor: isLong ? 'pointer' : 'default', userSelect: 'none' }}
+                                                    onClick={() => isLong && toggleReviewExpand(idx)}
+                                                >
+                                                    <span>{displayText}</span>
+                                                    {isLong && (
+                                                        <div className='review-more'>
+                                                            <span>
+                                                               [{isExpanded ? '（閉じる）' : '（もっと見る）'}]
+                                                            </span>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
-                                            <div className='review-text'><span>{review.text ?? 'レビューなし'}</span></div>
+                                            {review.profilePhotoUrl && (
+                                                <div className='review-pic'>
+                                                    <img src={review.profilePhotoUrl} alt='작성자사진' width="40" />
+                                                </div>
+                                            )}
                                         </div>
-                                        {review.profilePhotoUrl && (
-                                            <div className='review-pic'>
-                                                <img src={review.profilePhotoUrl} alt='작성자사진' width="40" />
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
                     )}
@@ -115,25 +151,22 @@ const PlaceDetail = ({
             </div>
 
             {isMemoOpen && (
-                <>
-                    <Memo
-                        detail={detail}
-                        selectedIcon={selectedIcon}
-                        setSelectedIcon={setSelectedIcon}
-                        refreshTrigger={refreshTrigger}
-                        setSelectedDetail={setSelectedDetail}
-                        setIsMemoOpen={setIsMemoOpen}
-                        onMemoAdded={onMemoAdded}
-                        onMemoUpdated={onMemoUpdated}
-                        onMemoDeleted={onMemoDeleted}
-                        memos={memos}
-                        setMemos={setMemos}
-                    />
-                </>
+                <Memo
+                    detail={detail}
+                    selectedIcon={selectedIcon}
+                    setSelectedIcon={setSelectedIcon}
+                    refreshTrigger={refreshTrigger}
+                    setSelectedDetail={setSelectedDetail}
+                    setIsMemoOpen={setIsMemoOpen}
+                    onMemoAdded={onMemoAdded}
+                    onMemoUpdated={onMemoUpdated}
+                    onMemoDeleted={onMemoDeleted}
+                    memos={memos}
+                    setMemos={setMemos}
+                />
             )}
-
         </>
     )
 }
 
-export default PlaceDetail
+export default PlaceDetail;
