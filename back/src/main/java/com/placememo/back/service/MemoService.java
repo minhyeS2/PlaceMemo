@@ -160,5 +160,38 @@ public class MemoService {
 	            .collect(Collectors.toList());
 		
 	}
+	
+	// placeId로 특정 메모 불러오기
+	public List<MemoResponse> getMemo(String userId, String placeId) {
+		Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("ユーザーが見つかりません"));
+		
+		List<Memo> memos = memoRepository.findByMemberAndPlaceId(member, placeId);
+		
+		return memos.stream()
+	            .map(memo -> new MemoResponse(
+	            	memo.getPk(),
+	                memo.getMember().getUserId(),
+	                memo.getMemoText(),
+	                memo.getTags(),
+	                memo.getIconUrl(),
+	                memo.getPlaceName(),
+	                memo.getPlaceId(),
+	                memo.getPlaceLat(),
+	                memo.getPlaceLng(),
+	                memo.getPlaceAddress(),
+	                memo.getPlaceStatus(),
+	                memo.getCreatedAt()))
+	            .collect(Collectors.toList());
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
  
 }
