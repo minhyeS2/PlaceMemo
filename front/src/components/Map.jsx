@@ -1,5 +1,5 @@
 import './Map.css';
-import React, { useCallback, useState, useRef, useEffect } from 'react';
+import React, { useCallback, useState, useRef, useEffect, useContext } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
 import SearchList from './SearchList';
 import PlaceDetail from './PlaceDetail';
@@ -11,7 +11,7 @@ import SelectMarker from './SelectMarker';
 import Memo from './Memo';
 import MemoList from './MemoList';
 import MemoFilter from './MemoFilter';
-import { MemoProvider } from './MemoContext';
+import { MemoContext } from './MemoContext';
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -24,6 +24,8 @@ const center = { lat: 35.681236, lng: 139.767125 };
 // };
 
 const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
+    const { memos, setMemos, fetchMemoByPlaceId } = useContext(MemoContext);
+
     const [map, setMap] = useState(null);
     const [keyword, setKeyword] = useState("");
     const [markers, setMarkers] = useState([]);
@@ -36,7 +38,6 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const [isSearchActive, setIsSearchActive] = useState(false);
     const [refreshTrigger, setRefreshTrigger] = useState(false);
     const [isMemoOpen, setIsMemoOpen] = useState(false);
-    const [memos, setMemos] = useState([]);
     const [mapCenter, setMapCenter] = useState(center); // 지도의 현재 중심을 저장할 상태 변수 추가
 
     console.log(savedMarkers);
@@ -172,10 +173,16 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const handleMapDragEnd = () => {
         if (map) {
             const newCenter = map.getCenter().toJSON();
-            console.log('지도 이동 후 새로운 중심 좌표:', newCenter);  // 여기 추가
             setMapCenter(newCenter);
         }
     };
+
+    const handelOpenMemo = (placeId) => {
+        fetchMemoByPlaceId(placeId);
+        setActiveMenu('my-memos');
+        fetchDetail(placeId);
+        setIsMemoOpen(true);
+    }
 
 
 
@@ -319,7 +326,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                                     </span>
                                 </div>
                                 <div className='info-store'
-                                // onClick={() => fetchDetail(savedSelectedMarker.placeId)}
+                                    onClick={() => handelOpenMemo(savedSelectedMarker.placeId)}
                                 ><span>{savedSelectedMarker.placeName}</span>
                                 </div>
                                 <div className='info-address'><span>{savedSelectedMarker.placeAddress}</span></div>
@@ -392,15 +399,12 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                 }
                 {activeMenu === 'my-memos' &&
                     <>
-                        <MemoProvider>
-                            <MemoFilter
-                            ></MemoFilter>
-                            <MemoList
-                                refreshTrigger={refreshTrigger}
-                                setIsMemoOpen={setIsMemoOpen}
-                                fetchDetail={fetchDetail}
-                            ></MemoList>
-                        </MemoProvider>
+                        <MemoFilter />
+                        <MemoList
+                            refreshTrigger={refreshTrigger}
+                            setIsMemoOpen={setIsMemoOpen}
+                            fetchDetail={fetchDetail}
+                        ></MemoList>
                     </>
                 }
             </div>

@@ -9,9 +9,10 @@ export const MemoProvider = ({ children }) => {
     const [selectedFilter, setSelectedFilter] = useState('sort-f');
     const [selectedSortedMarker, setSelectedSortedMarker] = useState(null);
     const [selectedSortedTags, setSelectedSortedTags] = useState([]);
+    const [placeMemosFilter, setPlaceMemosFilter] = useState(null);
 
     const fetchMemo = async () => {
-         const token = sessionStorage.getItem('token');
+        const token = sessionStorage.getItem('token');
         try {
             const response = await fetch(`http://localhost:8081/memos`, {
                 headers: {
@@ -31,6 +32,33 @@ export const MemoProvider = ({ children }) => {
         }
     };
 
+    const fetchMemoByPlaceId = async (placeId) => {
+        const token = sessionStorage.getItem('token');
+
+        try {
+            const response = await fetch(`http://localhost:8081/memos/place/${placeId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('メモの取得に失敗しました');
+            }
+
+            const data = await response.json();
+            setMemos(data);
+            setPlaceMemosFilter(placeId);
+
+        } catch (error) {
+            console.error(error);
+            alert('メモ取得エラー');
+        }
+
+
+    };
+
+
 
     const sortedMemos = useMemo(() => {
         return [...memos].sort((a, b) => {
@@ -48,17 +76,14 @@ export const MemoProvider = ({ children }) => {
         <MemoContext.Provider
             value={{
                 fetchMemo,
-                memos,
-                setMemos,
-                selectedSort,
-                setSelectedSort,
-                sortedMemos,
-                selectedFilter,
-                setSelectedFilter,
-                selectedSortedMarker,
-                setSelectedSortedMarker,
-                selectedSortedTags, 
-                setSelectedSortedTags
+                memos, setMemos,
+                selectedSort, setSelectedSort,
+                sortedMemos, 
+                selectedFilter, setSelectedFilter, 
+                selectedSortedMarker, setSelectedSortedMarker,
+                selectedSortedTags, setSelectedSortedTags,
+                fetchMemoByPlaceId,
+                placeMemosFilter, setPlaceMemosFilter
             }}
         >
             {children}
