@@ -271,13 +271,12 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                                 lat: Number(saved.placeLat),
                                 lng: Number(saved.placeLng)
                             }}
-                            icon={{
+                            icon={saved.iconUrl ? {
                                 url: saved.iconUrl,
                                 scaledSize: new window.google.maps.Size(40, 40),
-                            }}
+                            } : undefined}  // iconUrl 없으면 기본 마커
                             onClick={() => handleSavedInfoWindow(saved)}
-                        >
-                        </Marker>
+                        />
                     ))}
                     {selectedMarker && (
                         <InfoWindow
@@ -294,7 +293,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                                     </span>
                                 </div>
                                 <div className='info-store'
-                                    // onClick={() => fetchDetail(selectedMarker.placeId)}
+                                // onClick={() => fetchDetail(selectedMarker.placeId)}
                                 ><span>{selectedMarker.name}</span>
                                 </div>
                                 <div className='info-address'><span>{selectedMarker.address}</span></div>
@@ -320,7 +319,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
                                     </span>
                                 </div>
                                 <div className='info-store'
-                                    // onClick={() => fetchDetail(savedSelectedMarker.placeId)}
+                                // onClick={() => fetchDetail(savedSelectedMarker.placeId)}
                                 ><span>{savedSelectedMarker.placeName}</span>
                                 </div>
                                 <div className='info-address'><span>{savedSelectedMarker.placeAddress}</span></div>
