@@ -24,7 +24,7 @@ const center = { lat: 35.681236, lng: 139.767125 };
 // };
 
 const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarkers, setSavedMarkers }) => {
-    const { memos, setMemos, fetchMemoByPlaceId } = useContext(MemoContext);
+    const { memos, setMemos, fetchMemo, fetchMemoByPlaceId, setPlaceMemosFilter } = useContext(MemoContext);
 
     const [map, setMap] = useState(null);
     const [keyword, setKeyword] = useState("");
@@ -181,6 +181,13 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarke
         setActiveMenu('my-memos');
         fetchDetail(placeId);
         setIsMemoOpen(true);
+    }
+
+    const handelCloseDetail = async () => {
+        setSelectedDetail(null);
+        setPlaceMemosFilter(null); // placeId 필터 초기화
+        await fetchMemo();          // 전체 메모 fetch
+        setActiveMenu('my-memos');
     }
 
 
@@ -351,7 +358,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarke
                     <PlaceDetail
                         detail={selectedDetail}
                         photos={photos}
-                        onClose={() => setSelectedDetail(null)} // 내부에서도 닫기 가능
+                        onClose={handelCloseDetail} // 내부에서도 닫기 가능
                         selectedIcon={selectedIcon}
                         setSelectedIcon={setSelectedIcon}
                         setRefreshTrigger={setRefreshTrigger}
