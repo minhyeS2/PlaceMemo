@@ -86,6 +86,14 @@ public class MemoC {
     }
     
     
+    @GetMapping("/memos/place/{placeId}")
+    public List<MemoResponse> getMethodName(@PathVariable String placeId) {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName();
+        
+        return memoService.getMemo(userId, placeId);
+        
+    }
     
     
     

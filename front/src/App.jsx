@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MemoProvider } from './components/MemoContext';
 import { } from '@react-google-maps/api';
 
 import './App.css';
@@ -21,12 +22,14 @@ function App() {
         nickname={nickname}
         setNickname={setNickname}
       />
-      <Map
-        activeMenu={activeMenu}
-        setActiveMenu={setActiveMenu}
-        setIsLoggedIn={setIsLoggedIn}
-        setNickname={setNickname}
-      />
+      <MemoProvider>
+        <Map
+          activeMenu={activeMenu}
+          setActiveMenu={setActiveMenu}
+          setIsLoggedIn={setIsLoggedIn}
+          setNickname={setNickname}
+        />
+      </MemoProvider>
     </>
   )
 }

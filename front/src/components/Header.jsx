@@ -25,6 +25,7 @@ const Header = ({ activeMenu, setActiveMenu, isLoggedIn, setIsLoggedIn, nickname
         setActiveMenu('login');
     };
 
+
     return (
         <div className='header'>
             <div className='title'
