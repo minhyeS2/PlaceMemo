@@ -4,7 +4,7 @@ import { parseJwt } from '../utils/parseJwt.js';
 import React, { useEffect } from 'react';
 
 
-const Header = ({ activeMenu, setActiveMenu, isLoggedIn, setIsLoggedIn, nickname, setNickname }) => {
+const Header = ({ activeMenu, setActiveMenu, isLoggedIn, setIsLoggedIn, nickname, setNickname, setSavedMarkers }) => {
 
     useEffect(() => {
         const token = sessionStorage.getItem('token');
@@ -23,6 +23,7 @@ const Header = ({ activeMenu, setActiveMenu, isLoggedIn, setIsLoggedIn, nickname
         setIsLoggedIn(false);
         setNickname('');
         setActiveMenu('login');
+        setSavedMarkers([]);
     };
 
 
