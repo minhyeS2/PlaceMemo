@@ -10,6 +10,7 @@ function App() {
   const [activeMenu, setActiveMenu] = useState('search');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [savedMarkers, setSavedMarkers] = useState([]);
 
 
   return (
@@ -21,6 +22,7 @@ function App() {
         setIsLoggedIn={setIsLoggedIn}
         nickname={nickname}
         setNickname={setNickname}
+        setSavedMarkers={setSavedMarkers}
       />
       <MemoProvider>
         <Map
@@ -28,6 +30,8 @@ function App() {
           setActiveMenu={setActiveMenu}
           setIsLoggedIn={setIsLoggedIn}
           setNickname={setNickname}
+          savedMarkers={savedMarkers}
+          setSavedMarkers={setSavedMarkers}
         />
       </MemoProvider>
     </>

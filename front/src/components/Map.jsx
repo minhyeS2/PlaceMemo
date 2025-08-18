@@ -23,7 +23,7 @@ const center = { lat: 35.681236, lng: 139.767125 };
 //     width: '800px',
 // };
 
-const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
+const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarkers, setSavedMarkers }) => {
     const { memos, setMemos, fetchMemoByPlaceId } = useContext(MemoContext);
 
     const [map, setMap] = useState(null);
@@ -33,7 +33,6 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname }) => {
     const [selectedDetail, setSelectedDetail] = useState(null);
     const [photos, setPhotos] = useState(null);
     const [selectedIcon, setSelectedIcon] = useState("");
-    const [savedMarkers, setSavedMarkers] = useState([]);
     const [savedSelectedMarker, setSavedSelectedMarker] = useState(null);
     const [isSearchActive, setIsSearchActive] = useState(false);
     const [refreshTrigger, setRefreshTrigger] = useState(false);
