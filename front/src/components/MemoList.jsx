@@ -24,9 +24,9 @@ const MemoList = ({ refreshTrigger, setIsMemoOpen, fetchDetail }) => {
 
   }, [token, refreshTrigger]);
 
-  const displayMemos = placeMemosFilter
+const displayMemos = placeMemosFilter
     ? memos.filter(m => m.placeId === placeMemosFilter)
-    : sortedMemos;
+    : memos;  // sortedMemos 대신 fetch된 최신 memos 사용
 
   return (
     <div className="memo-list">
