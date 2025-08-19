@@ -95,46 +95,52 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarke
 
     // 검색시 키워드에 관한 정보를 받아오는 매서드
     const handleSearch = async () => {
-        if (!map || !window.google) {
-            console.log("地図の表示ができません。")
-            return;
-        }
-
-        clearMarker();
-        clearInfoWindow();
-
-        const bounds = map.getBounds();
-        const request = createSearchRequest(keyword, bounds);
-
         try {
-            const { places } = await google.maps.places.Place.searchByText(request);
-            console.log(places);
-
-            if (places.length) {
-                const bounds = new window.google.maps.LatLngBounds();
-
-                const newMarkers = places.map(place => ({
-                    placeId: place.id,
-                    position: place.location,
-                    name: place.displayName,
-                    address: place.formattedAddress,
-                    businessStatus: place.businessStatus,
-                    rating: place.rating,
-                    ratingCnt: place.userRatingCount,
-                }));
-
-                // console.log(newMarkers);
-                setMarkers(newMarkers);
-                setIsSearchActive(true);
-
-                newMarkers.forEach(m => bounds.extend(m.position));
-                mapRef.current.fitBounds(bounds);
-
-
-
-            } else {
-                console.log("検索結果が見つかりませんでした。");
+            if (!map || !window.google) {
+                console.log("地図の表示ができません。")
+                return;
             }
+            
+            clearMarker();
+            clearInfoWindow();
+
+            const token = sessionStorage.getItem('token');
+            if (token) {
+
+                const bounds = map.getBounds();
+                const request = createSearchRequest(keyword, bounds);
+                const { places } = await google.maps.places.Place.searchByText(request);
+                console.log(places);
+
+                if (places.length) {
+                    const bounds = new window.google.maps.LatLngBounds();
+
+                    const newMarkers = places.map(place => ({
+                        placeId: place.id,
+                        position: place.location,
+                        name: place.displayName,
+                        address: place.formattedAddress,
+                        businessStatus: place.businessStatus,
+                        rating: place.rating,
+                        ratingCnt: place.userRatingCount,
+                    }));
+
+                    // console.log(newMarkers);
+                    setMarkers(newMarkers);
+                    setIsSearchActive(true);
+
+                    newMarkers.forEach(m => bounds.extend(m.position));
+                    mapRef.current.fitBounds(bounds);
+
+                } else {
+                    console.log("検索結果が見つかりませんでした。");
+                }
+                
+            } else {
+                alert("ログインしてください。");
+                setActiveMenu('login');
+            }
+
         } catch (err) {
             console.error("検索中にエラーが発生しました：", err);
         }
