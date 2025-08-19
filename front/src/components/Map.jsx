@@ -131,11 +131,12 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarke
 
                     newMarkers.forEach(m => bounds.extend(m.position));
                     mapRef.current.fitBounds(bounds);
+                    setActiveMenu('search');
 
                 } else {
                     console.log("検索結果が見つかりませんでした。");
                 }
-                
+
             } else {
                 alert("ログインしてください。");
                 setActiveMenu('login');
