@@ -314,7 +314,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarke
                                     </span>
                                 </div>
                                 <div className='info-store'
-                                // onClick={() => fetchDetail(selectedMarker.placeId)}
+                                onClick={() => fetchDetail(selectedMarker.placeId)}
                                 ><span>{selectedMarker.name}</span>
                                 </div>
                                 <div className='info-address'><span>{selectedMarker.address}</span></div>
