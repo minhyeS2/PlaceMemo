@@ -132,6 +132,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarke
                     newMarkers.forEach(m => bounds.extend(m.position));
                     mapRef.current.fitBounds(bounds);
                     setActiveMenu('search');
+                    setSelectedDetail(null);
 
                 } else {
                     console.log("検索結果が見つかりませんでした。");
@@ -313,7 +314,7 @@ const Map = ({ activeMenu, setActiveMenu, setIsLoggedIn, setNickname, savedMarke
                                     </span>
                                 </div>
                                 <div className='info-store'
-                                // onClick={() => fetchDetail(selectedMarker.placeId)}
+                                onClick={() => fetchDetail(selectedMarker.placeId)}
                                 ><span>{selectedMarker.name}</span>
                                 </div>
                                 <div className='info-address'><span>{selectedMarker.address}</span></div>
